@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.player2Field = new SeaFightGame.VisualField();
-            this.player1Field = new SeaFightGame.VisualField();
             this.SuspendLayout();
             // 
             // button1
@@ -43,24 +41,6 @@
             this.button1.Text = "Game Menu";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // player2Field
-            // 
-            this.player2Field.DataField = null;
-            this.player2Field.Location = new System.Drawing.Point(328, 47);
-            this.player2Field.Name = "player2Field";
-            this.player2Field.Padding = new System.Windows.Forms.Padding(20);
-            this.player2Field.Size = new System.Drawing.Size(303, 303);
-            this.player2Field.TabIndex = 1;
-            // 
-            // player1Field
-            // 
-            this.player1Field.DataField = null;
-            this.player1Field.Location = new System.Drawing.Point(12, 47);
-            this.player1Field.Name = "player1Field";
-            this.player1Field.Padding = new System.Windows.Forms.Padding(20);
-            this.player1Field.Size = new System.Drawing.Size(303, 303);
-            this.player1Field.TabIndex = 0;
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -68,8 +48,6 @@
             this.BackColor = System.Drawing.Color.LightSkyBlue;
             this.ClientSize = new System.Drawing.Size(639, 438);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.player2Field);
-            this.Controls.Add(this.player1Field);
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.Text = "Sea Fight Game";
@@ -79,8 +57,6 @@
 
         #endregion
 
-        private VisualField player1Field;
-        private VisualField player2Field;
         private System.Windows.Forms.Button button1;
 
     }

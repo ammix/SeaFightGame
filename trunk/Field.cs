@@ -5,12 +5,15 @@ using System.Text;
 
 namespace SeaFightGame
 {
-    public class DataField : IDataField
+    public class Field : IField
     {
+        private const int X = 10;
+        private const int Y = 10;
+
         private List<Ship> _ships;
         private Cell[,] _cells;
 
-        public DataField()
+        public Field()
         {
             _cells = new Cell[10, 10];
             for (int i = 0; i < 10; i++)
@@ -22,7 +25,7 @@ namespace SeaFightGame
 
         public Cell GetCell(int i, int j)
         {
-            return _cells[i, j];
+            return i >= 0 && i < X && j >= 0 && j < Y ? _cells[i, j] : null;
         }
 
         public IEnumerable<Cell> GetCells()
