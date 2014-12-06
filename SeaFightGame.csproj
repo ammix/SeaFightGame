@@ -48,8 +48,9 @@
   <ItemGroup>
     <Compile Include="Cell.cs" />
     <Compile Include="CellCollection.cs" />
-    <Compile Include="DataField.cs" />
-    <Compile Include="IDataField.cs" />
+    <Compile Include="Field.cs" />
+    <Compile Include="FieldView.cs" />
+    <Compile Include="IField.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,11 +61,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="ShipCollection.cs" />
-    <Compile Include="UserField.cs">
+    <Compile Include="ShipsSetupAlgorithm.cs" />
+    <Compile Include="ViewControler.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserField.Designer.cs">
-      <DependentUpon>UserField.cs</DependentUpon>
+    <Compile Include="ViewControler.Designer.cs">
+      <DependentUpon>ViewControler.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
@@ -78,8 +80,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UserField.resx">
-      <DependentUpon>UserField.cs</DependentUpon>
+    <EmbeddedResource Include="ViewControler.resx">
+      <DependentUpon>ViewControler.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

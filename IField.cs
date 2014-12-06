@@ -5,8 +5,9 @@ using System.Text;
 
 namespace SeaFightGame
 {
-    public interface IDataField
+    public interface IField
     {
+        void AddShip(Ship ship);
         Cell GetCell(int i, int j);
         IEnumerable<Cell> GetCells();
         IEnumerable<Ship> GetShips();
