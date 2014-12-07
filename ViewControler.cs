@@ -11,6 +11,7 @@ namespace SeaFightGame
         private const int X = 10;
         private const int Y = 10;
         private const int D = 20;
+        private bool showShipsFlag = true;
 
         public ViewController(IField field)
         {
@@ -22,11 +23,11 @@ namespace SeaFightGame
         {
             DrawField();
 
-            foreach (Cell cell in field.GetCells())
-                DrawCell(cell);
-
             foreach (Ship ship in field.GetShips())
                 DrawShip(ship);
+
+            foreach (Cell cell in field.GetCells())
+                DrawCell(cell);
         }
 
         protected override void OnMouseClick(MouseEventArgs e)
@@ -38,7 +39,6 @@ namespace SeaFightGame
 
             Cell cell = field.GetCell((e.X - D) / dx, (e.Y - D) / dy);
             cell.IsFired = true;
-            DrawCell(cell);
         }
 
         private void DrawField()
@@ -84,7 +84,10 @@ namespace SeaFightGame
             int w = (ship.X2 - ship.X1 + 1) * dx;
             int h = (ship.Y2 - ship.Y1 + 1) * dy;
 
-            g.DrawRectangle(pen, x + 1, y + 1, w - 2, h - 2);
+            if (showShipsFlag)
+                g.DrawRectangle(pen, x + 1, y + 1, w - 2, h - 2);
+            if (ship.IsDead)
+                g.FillRectangle(new SolidBrush(Color.LightGray), x + 2, y + 2, w - 3, h - 3);
         }
 
         private void DrawCell(Cell cell)
