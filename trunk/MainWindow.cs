@@ -13,17 +13,16 @@ namespace SeaFightGame
     {
         private ViewController field1View;
         private ViewController field2View;
+        private IField field1;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            Field field1 = new Field();
-            //field1.AddShip(new Ship { X1 = 0, X2 = 2, Y1 = 0, Y2 = 0 });
-            //field1.AddShip(new Ship { X1 = 5, X2 = 5, Y1 = 5, Y2 = 7 });
-            ShipsSetupAlgorithm.Setup(field1);
+            field1 = new Field();
+            //ShipsSetupAlgorithm.Setup(field1);
             Field field2 = new Field();
-            ShipsSetupAlgorithm.Setup(field2);
+            //ShipsSetupAlgorithm.Setup(field2);
 
             field1View = new ViewController(field1);
             field2View = new ViewController(field2);
@@ -35,6 +34,15 @@ namespace SeaFightGame
             this.field2View.Location = new System.Drawing.Point(328, 47);
             this.field2View.Size = new System.Drawing.Size(300, 300);
             this.Controls.Add(field2View);
+
+            //ShipsSetupAlgorithm.Setup(field2);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            field1.Clear();
+            ShipsSetupAlgorithm.Setup(field1);
+            field1View.Refresh();
         }
 
     }

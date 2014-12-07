@@ -18,7 +18,7 @@ namespace SeaFightGame
             _cells = new Cell[10, 10];
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 10; j++)
-                    _cells[i, j] = new Cell { X = i, Y = j, IsFired = false };
+                    _cells[i, j] = new Cell { X = i, Y = j, IsFired = false, Field = this };
 
             _ships = new List<Ship>();
         }
@@ -51,5 +51,22 @@ namespace SeaFightGame
                         ship.BindWithCell(_cells[i, j]);
                     }
         }
+
+        public void Clear()
+        {
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++)
+                {
+                    _cells[i, j].IsFired = false;
+                    _cells[i, j].Ship = null;
+                }
+
+            _ships.Clear();
+        }
+
+
+        public event Action<Cell> CellFired;
+
+        public event Action<Ship> ShipFired;
     }
 }
