@@ -7,12 +7,12 @@ namespace SeaFightGame
 {
     public interface IField
     {
-        void AddShip(Ship ship);
+        void AddShip(int x1, int y1, int x2, int y2);
         void Clear();
-        Cell GetCell(int i, int j);
-        IEnumerable<Cell> GetCells();
-        IEnumerable<Ship> GetShips();
-        event Action<Cell> CellFired;
-        event Action<Ship> ShipFired;
+        void Fire(int i, int j);
+        ICell GetCell(int i, int j);
+        IShip GetShip(int i, int j);
+        IEnumerable<ICell> GetCells();
+        IEnumerable<IShip> GetShips();
     }
 }

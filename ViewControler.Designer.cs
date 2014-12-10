@@ -30,18 +30,19 @@
         {
             this.SuspendLayout();
             // 
-            // VisualField
+            // ViewController
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "VisualField";
-            this.Padding = new System.Windows.Forms.Padding(20);
+            this.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.Name = "ViewController";
             this.Size = new System.Drawing.Size(202, 202);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
 
     }
 }
