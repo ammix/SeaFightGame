@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SeaFightGame
 {
-    public class Ship
+    public class Ship: IShip
     {
         private int x1 = 0;
         private int x2 = 0;
@@ -43,16 +41,25 @@ namespace SeaFightGame
             _cells.Add(cell);
         }
 
-        public bool IsDead
+        public bool IsFired
         {
             get
             {
-                bool flag= false;
+                bool flag= true;
                 foreach (Cell cell in _cells)
-                    flag |= cell.IsFired;
+                    flag = flag && cell.IsFired;
 
                 return flag;
             }
         }
+
+        public void Fire()
+        {
+            if (Fired != null)
+                if (IsFired)
+                    Fired(this);
+        }
+
+        public event Action<IShip> Fired;
     }
 }

@@ -5,25 +5,36 @@ using System.Text;
 
 namespace SeaFightGame
 {
-    public class Cell
+    public class Cell: ICell
     {
         private bool isFired = false;
 
-        public IField Field { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        public Ship Ship { get; set; }
         public bool IsFired
         {
-            get
-            { 
-                return isFired;
-            }
-            set
-            {
-                isFired = value;
-                Field.Fire(this);
-            }
+            get { return isFired; }
         }
-        public Ship Ship { get; set; }
+        public bool HasShip
+        {
+            get { return Ship != null; }
+        }
+
+        public void Clear()
+        {
+            isFired = false;
+        }
+
+        public void Fire()
+        {
+            isFired = true;
+            if (Fired != null)
+                Fired(this);
+            if (Ship != null)
+                Ship.Fire();
+        }
+
+        public event Action<ICell> Fired;
     }
 }

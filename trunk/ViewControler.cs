@@ -11,34 +11,74 @@ namespace SeaFightGame
         private const int X = 10;
         private const int Y = 10;
         private const int D = 20;
-        private bool showShipsFlag = true;
+
+        ManualShipsSetup manualShipsSetup;
+
+        public void AutoSetupShips(IShipsSetupAlgorithm algorithm)
+        {
+            field.Clear();
+            algorithm.Setup(field);
+            foreach (IShip ship in field.GetShips())
+                ship.Fired += new Action<IShip>(DrawShip);
+            Refresh();
+        }
 
         public ViewController(IField field)
         {
             InitializeComponent();
-            this.field = field;    
+            this.field = field;
+            manualShipsSetup = new ManualShipsSetup(field, DrawShip, EraseShip);
+
+            foreach (ICell cell in field.GetCells())
+                cell.Fired += new Action<ICell>(DrawCell);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             DrawField();
 
+            foreach (ICell cell in field.GetCells())
+                DrawCell(cell);
+
             foreach (Ship ship in field.GetShips())
                 DrawShip(ship);
-
-            foreach (Cell cell in field.GetCells())
-                DrawCell(cell);
         }
 
-        protected override void OnMouseClick(MouseEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            int i, j;
+            GetPoint(e.X, e.Y, out i, out j);
+
+            if (manualShipsSetup.HasCompleted)
+            {
+                //game.Fire(e.Button, i, j);
+            }
+            else
+            {
+                manualShipsSetup.AddNewShip(e.Button, i, j);
+            }
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (!manualShipsSetup.HasCompleted)
+            {
+                int i, j;
+                GetPoint(e.X, e.Y, out i, out j);
+                DrawField();
+                manualShipsSetup.MoveNewShip(i, j);
+            }
+        }
+
+        private void GetPoint(int x, int y, out int i, out int j)
         {
             int width = Width - 2 * D;
             int height = Height - 2 * D;
             int dx = width / X;
             int dy = height / Y;
 
-            Cell cell = field.GetCell((e.X - D) / dx, (e.Y - D) / dy);
-            cell.IsFired = true;
+            i = (x - D) / dx;
+            j = (y - D) / dy;
         }
 
         private void DrawField()
@@ -68,7 +108,27 @@ namespace SeaFightGame
                 g.DrawLine(pen, x * dx + D, D, x * dx + D, height + D);
         }
 
-        private void DrawShip(Ship ship)
+        private void EraseShip(IShip ship)
+        {
+            Graphics g = Graphics.FromHwnd(this.Handle);
+            Brush brush = new SolidBrush(this.BackColor);
+            Pen pen = new Pen(brush);
+
+            int width = Width - 2 * D;
+            int height = Height - 2 * D;
+            int dx = width / X;
+            int dy = height / Y;
+
+            for (int i = ship.X1; i <= ship.X2; i++)
+                for (int j = ship.Y1; j <= ship.Y2; j++)
+                {
+                    int x = i * dx + D;
+                    int y = j * dy + D;
+                    g.DrawRectangle(pen, x + 1, y + 1, dx - 2, dy - 2);
+                }
+        }
+
+        private void DrawShip(IShip ship)
         {
             Graphics g = Graphics.FromHwnd(this.Handle);
             Brush brush = new SolidBrush(Color.Black);
@@ -84,42 +144,41 @@ namespace SeaFightGame
             int w = (ship.X2 - ship.X1 + 1) * dx;
             int h = (ship.Y2 - ship.Y1 + 1) * dy;
 
-            if (showShipsFlag)
-                g.DrawRectangle(pen, x + 1, y + 1, w - 2, h - 2);
-            if (ship.IsDead)
+            g.DrawRectangle(pen, x + 1, y + 1, w - 2, h - 2);
+            if (ship.IsFired)
                 g.FillRectangle(new SolidBrush(Color.LightGray), x + 2, y + 2, w - 3, h - 3);
         }
 
-        private void DrawCell(Cell cell)
+        private void DrawCell(ICell cell)
         {
-            if (!cell.IsFired)
-                return;
-
-            Graphics g = Graphics.FromHwnd(this.Handle);
-            Brush brush1 = new SolidBrush(Color.IndianRed);
-            Brush brush2 = new SolidBrush(Color.Gray);
-            Pen pen1 = new Pen(brush1, 3);
-            Pen pen2 = new Pen(brush2);
-
-            int width = Width - 2 * D;
-            int height = Height - 2 * D;
-            int dx = width / X;
-            int dy = height / Y;
-
-            if (cell.Ship != null)
+            if (cell.IsFired)
             {
-                int x = cell.X;
-                int y = cell.Y;
-                g.DrawLine(pen1, x * dx + D + 3, y * dy + D + 3, (x + 1) * dx + D - 3, (y + 1) * dy + D - 3);
-                g.DrawLine(pen1, x * dx + D + 3, (y + 1) * dy + D - 3, (x + 1) * dx + D - 3, y * dy + D + 3);
-                return;
-            }
-            else
-            {
-                int x = cell.X * dx + dx / 2 - 2;
-                int y = cell.Y * dy + dy / 2 - 2;
-                g.DrawEllipse(pen2, x + D, y + D, 4, 4);
-                g.FillEllipse(brush2, x + D, y + D, 4, 4);
+                Graphics g = Graphics.FromHwnd(this.Handle);
+                Brush brush1 = new SolidBrush(Color.IndianRed);
+                Brush brush2 = new SolidBrush(Color.Gray);
+                Pen pen1 = new Pen(brush1, 3);
+                Pen pen2 = new Pen(brush2);
+
+                int width = Width - 2 * D;
+                int height = Height - 2 * D;
+                int dx = width / X;
+                int dy = height / Y;
+
+                if (cell.HasShip)
+                {
+                    int x = cell.X;
+                    int y = cell.Y;
+                    g.DrawLine(pen1, x * dx + D + 3, y * dy + D + 3, (x + 1) * dx + D - 3, (y + 1) * dy + D - 3);
+                    g.DrawLine(pen1, x * dx + D + 3, (y + 1) * dy + D - 3, (x + 1) * dx + D - 3, y * dy + D + 3);
+                    return;
+                }
+                else
+                {
+                    int x = cell.X * dx + dx / 2 - 2;
+                    int y = cell.Y * dy + dy / 2 - 2;
+                    g.DrawEllipse(pen2, x + D, y + D, 4, 4);
+                    g.FillEllipse(brush2, x + D, y + D, 4, 4);
+                }
             }
         }
     }

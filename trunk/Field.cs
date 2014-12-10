@@ -10,45 +10,48 @@ namespace SeaFightGame
         private const int X = 10;
         private const int Y = 10;
 
-        private List<Ship> _ships;
-        private Cell[,] _cells;
+        private List<Ship> ships;
+        private Cell[,] cells;
 
         public Field()
         {
-            _cells = new Cell[10, 10];
+            cells = new Cell[10, 10];
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 10; j++)
-                    _cells[i, j] = new Cell { X = i, Y = j, IsFired = false, Field = this };
+                {
+                    cells[i, j] = new Cell { X = i, Y = j };
+                }
 
-            _ships = new List<Ship>();
+            ships = new List<Ship>();
         }
 
-        public Cell GetCell(int i, int j)
+        public ICell GetCell(int i, int j)
         {
-            return i >= 0 && i < X && j >= 0 && j < Y ? _cells[i, j] : null;
+            return i >= 0 && i < X && j >= 0 && j < Y ? cells[i, j] : null;
         }
 
-        public IEnumerable<Cell> GetCells()
+        public IEnumerable<ICell> GetCells()
         {
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 10; j++)
-                    yield return _cells[i, j];
+                    yield return cells[i, j];
         }
 
-        public IEnumerable<Ship> GetShips()
+        public IEnumerable<IShip> GetShips()
         {
-            return _ships;
+            return ships;
         }
 
-        public void AddShip(Ship ship)
+        public void AddShip(int x1, int y1, int x2, int y2)
         {
-            _ships.Add(ship);
+            Ship ship = new Ship(x1, y1, x2, y2);
+            ships.Add(ship);
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 10; j++)
                     if (ship.X1 <= i && i <= ship.X2 && ship.Y1 <= j && j <= ship.Y2)
                     {
-                        _cells[i, j].Ship = ship;
-                        ship.BindWithCell(_cells[i, j]);
+                        cells[i, j].Ship = ship;
+                        ship.BindWithCell(cells[i, j]); 
                     }
         }
 
@@ -57,16 +60,45 @@ namespace SeaFightGame
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 10; j++)
                 {
-                    _cells[i, j].IsFired = false;
-                    _cells[i, j].Ship = null;
+                    cells[i, j].Clear(); // IsFired = false;
+                    cells[i, j].Ship = null;
                 }
 
-            _ships.Clear();
+            ships.Clear();
+        }
+
+        public void SetupShips(IShipsSetupAlgorithm algorithm)
+        {
+            algorithm.Setup(this);
+        }
+
+        public void Fire(int x, int y)
+        {
+            Cell cell = (Cell)GetCell(x, y);
+            if (cell != null && !cell.IsFired)
+            {
+                cell.Fire();
+                if (cell.HasShip && cell.Ship.IsFired)
+                {
+                    int x1 = cell.Ship.X1;
+                    int x2 = cell.Ship.X2;
+                    int y1 = cell.Ship.Y1;
+                    int y2 = cell.Ship.Y2;
+                    for (int i = x1 - 1; i <= x2 + 1; i++)
+                        for (int j = y1 - 1; j <= y2 + 1; j++)
+                        {
+                            cell = (Cell)GetCell(i, j);
+                            if (cell != null && !cell.IsFired)
+                                cell.Fire();
+                        }
+                }
+            }
         }
 
 
-        public event Action<Cell> CellFired;
-
-        public event Action<Ship> ShipFired;
+        public IShip GetShip(int i, int j)
+        {
+            return (GetCell(i, j) as Cell).Ship;
+        }
     }
 }
