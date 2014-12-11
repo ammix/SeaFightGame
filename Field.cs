@@ -86,12 +86,12 @@ namespace SeaFightGame.Model
             algorithm.Setup(this);
         }
 
-        public void Fire(int x, int y)
+        public bool Fire(int x, int y)
         {
             Cell cell = (Cell)GetCell(x, y);
             if (cell != null && !cell.IsFired)
             {
-                cell.Fire();
+                /*bool isHit = */cell.Fire();
                 if (cell.HasShip && cell.Ship.IsFired)
                 {
                     int x1 = cell.Ship.X1;
@@ -107,6 +107,7 @@ namespace SeaFightGame.Model
                         }
                 }
             }
+            return (GetCell(x, y) as Cell).HasShip;
         }
 
         //public IShip GetShip(int i, int j)

@@ -14,14 +14,14 @@ namespace SeaFightGame
         private int shipNumber = 0;
 
         private IField field;
-        private Action<IShip> drawShip;
-        private Action<IShip> eraseShip;
+        public event Action<IShip> DrawShip;
+        public event Action<IShip> EraseShip;
 
-        public ManualShipsSetup(IField field, Action<IShip> drawShip, Action<IShip> eraseShip)
+        public ManualShipsSetup(IField field) //, Action<IShip> drawShip, Action<IShip> eraseShip
         {
             this.field = field;
-            this.drawShip = drawShip;
-            this.eraseShip = eraseShip;
+            //this.drawShip = drawShip;
+            //this.eraseShip = eraseShip;
         }
 
         public bool HasCompleted
@@ -46,8 +46,6 @@ namespace SeaFightGame
                             return;
 
                         ship = field.GetShip(x1, y1, x2, y2);
-                        ship.StateChanged += new Action<IShip>(drawShip);
-                        //drawShip(ship);
                         newShipFlag = false;
                     }
                     else
@@ -58,11 +56,15 @@ namespace SeaFightGame
                         if (n >= ShipSetupUtils.ShipsStock.Length)
                             n = ShipSetupUtils.ShipsStock.Length - 1;
                         deckNumber = ShipSetupUtils.ShipsStock[n] - 1;
+
+                        if (DrawShip != null)
+                            DrawShip(ship);
                     }
                     break;
                 case MouseButtons.Right:
                     int tmp = direction;
                     direction += 1;
+
                     if (direction == 2)
                         direction = 0;
 
@@ -90,12 +92,16 @@ namespace SeaFightGame
                 if (ShipHasNeighbours(x1, y1, x2, y2))
                     return;
 
-                eraseShip(ship);
+                if (EraseShip != null)
+                    EraseShip(ship);
+
                 if (!(x2 < 0 || x2 >= 10 || y2 < 0 || y2 >= 10))
                 {
                     field.UpdateShip(ship, x1, y1, x2, y2);
                 }
-                drawShip(ship);
+
+                if (DrawShip != null)
+                    DrawShip(ship);
             }
         }
 

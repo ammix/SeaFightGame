@@ -28,11 +28,13 @@ namespace SeaFightGame.Model
 
         public void Fire()
         {
+            //bool tmp = isFired;
             isFired = true;
             if (Fired != null)
                 Fired(this);
             if (Ship != null)
                 Ship.Fire();
+            //return tmp != isFired;
         }
 
         public event Action<ICell> Fired;

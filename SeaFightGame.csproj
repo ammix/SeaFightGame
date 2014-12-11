@@ -58,8 +58,10 @@
     <Compile Include="GameLogic.cs" />
     <Compile Include="ICell.cs" />
     <Compile Include="IField.cs" />
+    <Compile Include="IGameLogic.cs" />
     <Compile Include="IShip.cs" />
     <Compile Include="IShipsSetupAlgorithm.cs" />
+    <Compile Include="IShootAlgorithm.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +77,7 @@
     <Compile Include="Ship.cs" />
     <Compile Include="ShipCollection.cs" />
     <Compile Include="AutoShipsSetup.cs" />
+    <Compile Include="ShootAlgorithm.cs" />
     <Compile Include="ViewControler.cs">
       <SubType>UserControl</SubType>
     </Compile>
