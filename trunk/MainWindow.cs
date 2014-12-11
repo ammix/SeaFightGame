@@ -18,7 +18,7 @@ namespace SeaFightGame
 
             Field field1 = new Field();
             Field field2 = new Field();
-            algorithm = new ShipsSetupAlgorithm();
+            algorithm = new AutoShipsSetup();
 
             field1View = new ViewController(field1);
             field2View = new ViewController(field2);

@@ -8,39 +8,8 @@ namespace SeaFightGame
 {
     public class ManualShipsSetup
     {
-        internal class ShipView : IShip
-        {
-            public int X1 { get; set; }
-            public int X2 { get; set; }
-            public int Y1 { get; set; }
-            public int Y2 { get; set; }
-            public bool IsFired { get; set; }
-            public event Action<IShip> Fired;
-            public void Normalize()
-            {
-                int x1 = Math.Min(X1, X2);
-                int y1 = Math.Min(Y1, Y2);
-                int x2 = Math.Max(X1, X2);
-                if (x2 > 9)
-                {                  
-                    x1 = 9 - (x2 - x1);
-                    x2 = 9;
-                }
-                int y2 = Math.Max(Y1, Y2);
-                if (y2 > 9)
-                {
-                    y1 = 9 - (y2 - y1);
-                    y2 = 9;
-                }
-                X1 = x1;
-                X2 = x2;
-                Y1 = y1;
-                Y2 = y2;
-            }
-        }
-
         private bool newShipFlag = true;
-        private ShipView ship;
+        private IShip ship;
         private int deckNumber = 3;
         private int direction = 0;
         private int shipNumber = 0;
@@ -72,14 +41,13 @@ namespace SeaFightGame
                         if (ShipHasNeighbours(x1, y1, x2, y2))
                             return;
 
-                        ship = new ShipView { X1 = x1, Y1 = y1, X2 = x2, Y2 = y2 };
-                        ship.Normalize();
+                        ship = field.GetShip(x1, y1, x2, y2);
                         drawShip(ship);
                         newShipFlag = false;
                     }
                     else
                     {
-                        field.AddShip(ship.X1, ship.Y1, ship.X2, ship.Y2);
+                        field.AddShip(ship);
                         newShipFlag = true;
                         deckNumber = ShipSetupUtils.ShipsStock[++shipNumber] - 1;
                     }
@@ -101,7 +69,7 @@ namespace SeaFightGame
                     }
                     break;
             }
-            ship.Fired += new Action<IShip>(drawShip);
+            //ship.Fired += new Action<IShip>(drawShip);
         }
         public void MoveNewShip(int i, int j)
         {
@@ -117,10 +85,7 @@ namespace SeaFightGame
                 eraseShip(ship);
                 if (!(x2 < 0 || x2 >= 10 || y2 < 0 || y2 >= 10))
                 {
-                    ship.X1 = x1;
-                    ship.Y1 = y1;
-                    ship.X2 = x2;
-                    ship.Y2 = y2;
+                    field.UpdateShip(ship, x1, y1, x2, y2);
                 }
                 drawShip(ship);
             }

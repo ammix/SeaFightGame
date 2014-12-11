@@ -14,15 +14,6 @@ namespace SeaFightGame
 
         ManualShipsSetup manualShipsSetup;
 
-        public void AutoSetupShips(IShipsSetupAlgorithm algorithm)
-        {
-            field.Clear();
-            algorithm.Setup(field);
-            foreach (IShip ship in field.GetShips())
-                ship.Fired += new Action<IShip>(DrawShip);
-            Refresh();
-        }
-
         public ViewController(IField field)
         {
             InitializeComponent();
@@ -31,6 +22,15 @@ namespace SeaFightGame
 
             foreach (ICell cell in field.GetCells())
                 cell.Fired += new Action<ICell>(DrawCell);
+        }
+
+        public void AutoSetupShips(IShipsSetupAlgorithm algorithm)
+        {
+            field.Clear();
+            algorithm.Setup(field);
+            foreach (IShip ship in field.GetShips())
+                ship.Fired += new Action<IShip>(DrawShip);
+            Refresh();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -65,7 +65,7 @@ namespace SeaFightGame
             {
                 int i, j;
                 GetPoint(e.X, e.Y, out i, out j);
-                DrawField();
+
                 manualShipsSetup.MoveNewShip(i, j);
             }
         }
