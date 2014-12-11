@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace SeaFightGame
@@ -24,7 +22,12 @@ namespace SeaFightGame
             this.drawShip = drawShip;
             this.eraseShip = eraseShip;
         }
-        public bool HasCompleted { get; set; }
+
+        public bool HasCompleted
+        {
+            get { return shipNumber >= ShipSetupUtils.ShipsStock.Length; }
+        }
+
         public void AddNewShip(MouseButtons buttons, int i, int j)
         {
             int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
@@ -42,14 +45,18 @@ namespace SeaFightGame
                             return;
 
                         ship = field.GetShip(x1, y1, x2, y2);
-                        drawShip(ship);
+                        ship.StateChanged += new Action<IShip>(drawShip);
+                        //drawShip(ship);
                         newShipFlag = false;
                     }
                     else
                     {
                         field.AddShip(ship);
                         newShipFlag = true;
-                        deckNumber = ShipSetupUtils.ShipsStock[++shipNumber] - 1;
+                        int n = ++shipNumber;
+                        if (n >= ShipSetupUtils.ShipsStock.Length)
+                            n = ShipSetupUtils.ShipsStock.Length - 1;
+                        deckNumber = ShipSetupUtils.ShipsStock[n] - 1;
                     }
                     break;
                 case MouseButtons.Right:
@@ -69,8 +76,8 @@ namespace SeaFightGame
                     }
                     break;
             }
-            //ship.Fired += new Action<IShip>(drawShip);
         }
+
         public void MoveNewShip(int i, int j)
         {
             if (!newShipFlag)
