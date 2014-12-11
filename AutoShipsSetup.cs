@@ -56,7 +56,7 @@ namespace SeaFightGame
         public static int[] ShipsStock = new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
     }
 
-    public class ShipsSetupAlgorithm: IShipsSetupAlgorithm
+    public class AutoShipsSetup: IShipsSetupAlgorithm
     {
         private static Random r = new Random(DateTime.Now.Millisecond);
 
@@ -84,7 +84,7 @@ namespace SeaFightGame
                 }
                 while (!ShipSetupUtils.IsCellFree(x2, y2, field));
 
-                field.AddShip(x1, y1, x2, y2);
+                field.AddShip(field.GetShip(x1, y1, x2, y2));
             }
 
 
