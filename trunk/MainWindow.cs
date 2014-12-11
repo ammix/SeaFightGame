@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -21,9 +20,12 @@ namespace SeaFightGame
             Field field1 = new Field();
             Field field2 = new Field();
             algorithm = new AutoShipsSetup();
+            IShootAlgorithm ai = new ShootAlgorithm();
+            IGameLogic gameLogic = new GameLogic(field1, field2, ai);
+            ManualShipsSetup shipsSetupLogic = new ManualShipsSetup(field1);
 
-            field1View = new PlayerViewControler(field1);
-            field2View = new EnemyViewControler(field2);
+            field1View = new PlayerViewControler(field1, shipsSetupLogic);
+            field2View = new EnemyViewControler(field2, gameLogic);
 
             this.field1View.Location = new System.Drawing.Point(12, 47);
             this.field1View.Size = new System.Drawing.Size(300, 300);
@@ -36,8 +38,8 @@ namespace SeaFightGame
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //field1View.AutoSetupShips(algorithm);
-            field2View.AutoSetupShips(algorithm);
+            //field2View.AutoSetupShips(algorithm);
+            contextMenuStrip1.Visible = true;
         }
 
     }

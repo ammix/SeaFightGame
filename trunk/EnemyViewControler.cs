@@ -6,16 +6,20 @@ namespace SeaFightGame.View
 {
     public class EnemyViewControler : ViewController
     {
-        public EnemyViewControler(IField field)
+        private IGameLogic game;
+
+        public EnemyViewControler(IField field, IGameLogic game)
             : base(field)
-        { }
+        {
+            this.game = game;
+        }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
             int i, j;
             GetPoint(e.X, e.Y, out i, out j);
 
-            field.Fire(i, j);
+            game.Fire(i, j);
         }
     }
 }

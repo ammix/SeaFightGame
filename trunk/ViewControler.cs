@@ -9,9 +9,9 @@ namespace SeaFightGame.View
     public partial class ViewController : UserControl
     {
         protected readonly IField field;
-        protected const int X = 10;
-        protected const int Y = 10;
-        protected const int CellSize = 20;
+        private const int X = 10;
+        private const int Y = 10;
+        private const int Shift = 20;
 
         public ViewController(IField field)
         {
@@ -36,7 +36,7 @@ namespace SeaFightGame.View
             DrawField();
 
             foreach (ICell cell in field.GetCells())
-                DrawCell(cell);
+                DrawCell(cell, false);
 
             foreach (Ship ship in field.GetShips())
                 DrawShip(ship);
@@ -44,13 +44,13 @@ namespace SeaFightGame.View
 
         protected void GetPoint(int x, int y, out int i, out int j)
         {
-            int width = Width - 2 * CellSize;
-            int height = Height - 2 * CellSize;
+            int width = Width - 2 * Shift;
+            int height = Height - 2 * Shift;
             int dx = width / X;
             int dy = height / Y;
 
-            i = (x - CellSize) / dx;
-            j = (y - CellSize) / dy;
+            i = (x - Shift) / dx;
+            j = (y - Shift) / dy;
         }
 
         private void DrawField()
@@ -61,23 +61,23 @@ namespace SeaFightGame.View
             Pen pen = new Pen(brush);
             StringFormat format = new StringFormat { Alignment = StringAlignment.Far };
 
-            int width = Width - 2 * CellSize;
-            int height = Height - 2 * CellSize;
+            int width = Width - 2 * Shift;
+            int height = Height - 2 * Shift;
             int dx = width / X;
             int dy = height / Y;
 
             for (int y = 0; y < Y; y++)
-                g.DrawString((y + 1).ToString(), font, brush, CellSize, y * dy + CellSize, format);
+                g.DrawString((y + 1).ToString(), font, brush, Shift, y * dy + Shift, format);
 
             string[] str = new[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
             for (int x = 0; x < X; x++)
-                g.DrawString(str[x], font, brush, x * dx + CellSize + 10, 0);
+                g.DrawString(str[x], font, brush, x * dx + Shift + 10, 0);
 
             for (int y = 0; y <= Y; y++)
-                g.DrawLine(pen, CellSize, y * dy + CellSize, width + CellSize, y * dy + CellSize);
+                g.DrawLine(pen, Shift, y * dy + Shift, width + Shift, y * dy + Shift);
 
             for (int x = 0; x <= X; x++)
-                g.DrawLine(pen, x * dx + CellSize, CellSize, x * dx + CellSize, height + CellSize);
+                g.DrawLine(pen, x * dx + Shift, Shift, x * dx + Shift, height + Shift);
         }
 
         protected void DrawShip(IShip ship)
@@ -87,13 +87,13 @@ namespace SeaFightGame.View
             Brush brush = new SolidBrush(isShipSetuped ? Color.Black : Color.Gray);
             Pen pen = new Pen(brush);
 
-            int width = Width - 2 * CellSize;
-            int height = Height - 2 * CellSize;
+            int width = Width - 2 * Shift;
+            int height = Height - 2 * Shift;
             int dx = width / X;
             int dy = height / Y;
 
-            int x = ship.X1 * dx + CellSize;
-            int y = ship.Y1 * dy + CellSize;
+            int x = ship.X1 * dx + Shift;
+            int y = ship.Y1 * dy + Shift;
             int w = (ship.X2 - ship.X1 + 1) * dx;
             int h = (ship.Y2 - ship.Y1 + 1) * dy;
 
@@ -102,35 +102,70 @@ namespace SeaFightGame.View
                 g.FillRectangle(new SolidBrush(Color.LightGray), x + 2, y + 2, w - 3, h - 3);
         }
 
+        protected void EraseShip(IShip ship)
+        {
+            Graphics g = Graphics.FromHwnd(this.Handle);
+            Brush brush = new SolidBrush(this.BackColor);
+            Pen pen = new Pen(brush);
+
+            int width = Width - 2 * Shift;
+            int height = Height - 2 * Shift;
+            int dx = width / X;
+            int dy = height / Y;
+
+            for (int i = ship.X1; i <= ship.X2; i++)
+                for (int j = ship.Y1; j <= ship.Y2; j++)
+                {
+                    int x = i * dx + Shift;
+                    int y = j * dy + Shift;
+                    g.DrawRectangle(pen, x + 1, y + 1, dx - 2, dy - 2);
+                }
+        }
+
         private void DrawCell(ICell cell)
+        {
+            DrawCell(cell, true);
+        }
+
+        private void DrawCell(ICell cell, bool animation)
         {
             if (cell.IsFired)
             {
                 Graphics g = Graphics.FromHwnd(this.Handle);
+                Brush brush0 = new SolidBrush(this.BackColor);
                 Brush brush1 = new SolidBrush(Color.IndianRed);
                 Brush brush2 = new SolidBrush(Color.Gray);
+                Brush brush3 = new SolidBrush(Color.Tomato);
                 Pen pen1 = new Pen(brush1, 3);
                 Pen pen2 = new Pen(brush2);
 
-                int width = Width - 2 * CellSize;
-                int height = Height - 2 * CellSize;
+                int width = Width - 2 * Shift;
+                int height = Height - 2 * Shift;
                 int dx = width / X;
                 int dy = height / Y;
+                int i = cell.X;
+                int j = cell.Y;
+                int x, y;
 
                 if (cell.HasShip)
                 {
-                    int x = cell.X;
-                    int y = cell.Y;
-                    g.DrawLine(pen1, x * dx + CellSize + 3, y * dy + CellSize + 3, (x + 1) * dx + CellSize - 3, (y + 1) * dy + CellSize - 3);
-                    g.DrawLine(pen1, x * dx + CellSize + 3, (y + 1) * dy + CellSize - 3, (x + 1) * dx + CellSize - 3, y * dy + CellSize + 3);
-                    return;
+                    g.DrawLine(pen1, i * dx + Shift + 3, j * dy + Shift + 3, (i + 1) * dx + Shift - 3, (j + 1) * dy + Shift - 3);
+                    g.DrawLine(pen1, i * dx + Shift + 3, (j + 1) * dy + Shift - 3, (i + 1) * dx + Shift - 3, j * dy + Shift + 3);
                 }
                 else
                 {
-                    int x = cell.X * dx + dx / 2 - 2;
-                    int y = cell.Y * dy + dy / 2 - 2;
-                    g.DrawEllipse(pen2, x + CellSize, y + CellSize, 4, 4);
-                    g.FillEllipse(brush2, x + CellSize, y + CellSize, 4, 4);
+                    if (animation)
+                    {
+                        x = i * dx + Shift + 1;
+                        y = j * dy + Shift + 1;
+                        g.FillRectangle(brush3, x, y, dx - 1, dy - 1);
+                        System.Threading.Thread.Sleep(50);
+                        g.FillRectangle(brush0, x, y, dx - 1, dy - 1);
+                    }
+                    x = i * dx + dx / 2 + Shift - 2;
+                    y = j * dy + dy / 2 + Shift - 2;
+                    g.DrawEllipse(pen2, x, y, 4, 4);
+                    g.FillEllipse(brush2, x, y, 4, 4);
                 }
             }
         }

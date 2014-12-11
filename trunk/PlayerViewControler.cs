@@ -10,10 +10,12 @@ namespace SeaFightGame
     {
         private ManualShipsSetup manualShipsSetup;
 
-        public PlayerViewControler(IField field)
+        public PlayerViewControler(IField field, ManualShipsSetup manualShipsSetup)
             : base(field)
         {
-            manualShipsSetup = new ManualShipsSetup(field, DrawShip, EraseShip);
+            this.manualShipsSetup = manualShipsSetup;
+            manualShipsSetup.DrawShip += new Action<IShip>(DrawShip);
+            manualShipsSetup.EraseShip += new Action<IShip>(EraseShip);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -36,26 +38,6 @@ namespace SeaFightGame
 
                 manualShipsSetup.MoveNewShip(i, j);
             }
-        }
-
-        private void EraseShip(IShip ship)
-        {
-            Graphics g = Graphics.FromHwnd(this.Handle);
-            Brush brush = new SolidBrush(this.BackColor);
-            Pen pen = new Pen(brush);
-
-            int width = Width - 2 * CellSize;
-            int height = Height - 2 * CellSize;
-            int dx = width / X;
-            int dy = height / Y;
-
-            for (int i = ship.X1; i <= ship.X2; i++)
-                for (int j = ship.Y1; j <= ship.Y2; j++)
-                {
-                    int x = i * dx + CellSize;
-                    int y = j * dy + CellSize;
-                    g.DrawRectangle(pen, x + 1, y + 1, dx - 2, dy - 2);
-                }
         }
     }
 }
