@@ -12,6 +12,6 @@ namespace SeaFightGame
         int Y1 { get; }
         int Y2 { get; }
         bool IsFired { get; }
-        event Action<IShip> Fired;
+        event Action<IShip> StateChanged;
     }
 }

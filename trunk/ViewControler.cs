@@ -7,18 +7,15 @@ namespace SeaFightGame
 {
     public partial class ViewController : UserControl
     {
-        private readonly IField field;
+        protected readonly IField field;
         private const int X = 10;
         private const int Y = 10;
         private const int D = 20;
-
-        ManualShipsSetup manualShipsSetup;
 
         public ViewController(IField field)
         {
             InitializeComponent();
             this.field = field;
-            manualShipsSetup = new ManualShipsSetup(field, DrawShip, EraseShip);
 
             foreach (ICell cell in field.GetCells())
                 cell.Fired += new Action<ICell>(DrawCell);
@@ -29,7 +26,7 @@ namespace SeaFightGame
             field.Clear();
             algorithm.Setup(field);
             foreach (IShip ship in field.GetShips())
-                ship.Fired += new Action<IShip>(DrawShip);
+                ship.StateChanged += new Action<IShip>(DrawShip);
             Refresh();
         }
 
@@ -44,33 +41,34 @@ namespace SeaFightGame
                 DrawShip(ship);
         }
 
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            int i, j;
-            GetPoint(e.X, e.Y, out i, out j);
+        //protected override void OnMouseDown(MouseEventArgs e)
+        //{
+        //    int i, j;
+        //    GetPoint(e.X, e.Y, out i, out j);
 
-            if (manualShipsSetup.HasCompleted)
-            {
-                //game.Fire(e.Button, i, j);
-            }
-            else
-            {
-                manualShipsSetup.AddNewShip(e.Button, i, j);
-            }
-        }
+        //    if (manualShipsSetup.HasCompleted)
+        //    {
+        //        //game.Fire(e.Button, i, j);
+        //        field.Fire(i, j);
+        //    }
+        //    else
+        //    {
+        //        manualShipsSetup.AddNewShip(e.Button, i, j);
+        //    }
+        //}
 
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            if (!manualShipsSetup.HasCompleted)
-            {
-                int i, j;
-                GetPoint(e.X, e.Y, out i, out j);
+        //protected override void OnMouseMove(MouseEventArgs e)
+        //{
+        //    if (!manualShipsSetup.HasCompleted)
+        //    {
+        //        int i, j;
+        //        GetPoint(e.X, e.Y, out i, out j);
 
-                manualShipsSetup.MoveNewShip(i, j);
-            }
-        }
+        //        manualShipsSetup.MoveNewShip(i, j);
+        //    }
+        //}
 
-        private void GetPoint(int x, int y, out int i, out int j)
+        protected void GetPoint(int x, int y, out int i, out int j)
         {
             int width = Width - 2 * D;
             int height = Height - 2 * D;
@@ -108,7 +106,7 @@ namespace SeaFightGame
                 g.DrawLine(pen, x * dx + D, D, x * dx + D, height + D);
         }
 
-        private void EraseShip(IShip ship)
+        protected void EraseShip(IShip ship)
         {
             Graphics g = Graphics.FromHwnd(this.Handle);
             Brush brush = new SolidBrush(this.BackColor);
@@ -128,10 +126,11 @@ namespace SeaFightGame
                 }
         }
 
-        private void DrawShip(IShip ship)
+        protected void DrawShip(IShip ship)
         {
             Graphics g = Graphics.FromHwnd(this.Handle);
-            Brush brush = new SolidBrush(Color.Black);
+            bool isShipSetuped = field.GetCell(ship.X1, ship.Y1).HasShip;
+            Brush brush = new SolidBrush(isShipSetuped ? Color.Black : Color.Gray);
             Pen pen = new Pen(brush);
 
             int width = Width - 2 * D;
@@ -180,6 +179,52 @@ namespace SeaFightGame
                     g.FillEllipse(brush2, x + D, y + D, 4, 4);
                 }
             }
+        }
+    }
+
+    public class PlayerViewControler : ViewController
+    {
+        ManualShipsSetup manualShipsSetup;
+
+        public PlayerViewControler(IField field): base(field)
+        {
+            manualShipsSetup = new ManualShipsSetup(field, DrawShip, EraseShip);
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            int i, j;
+            GetPoint(e.X, e.Y, out i, out j);
+
+            if (!manualShipsSetup.HasCompleted)
+            {
+                manualShipsSetup.AddNewShip(e.Button, i, j);
+            }
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (!manualShipsSetup.HasCompleted)
+            {
+                int i, j;
+                GetPoint(e.X, e.Y, out i, out j);
+
+                manualShipsSetup.MoveNewShip(i, j);
+            }
+        }
+    }
+
+    public class EnemyViewControler : ViewController
+    {
+        public EnemyViewControler(IField field): base(field)
+        { }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            int i, j;
+            GetPoint(e.X, e.Y, out i, out j);
+
+            field.Fire(i, j);
         }
     }
 }

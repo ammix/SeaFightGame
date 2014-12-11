@@ -10,7 +10,7 @@ namespace SeaFightGame
         public static int X = 10;
         public static int Y = 10;
 
-        private List<Ship> ships;
+        private List<Ship>  ships;
         private Cell[,] cells;
 
         public Field()
@@ -42,10 +42,17 @@ namespace SeaFightGame
             return ships;
         }
 
+        public IShip GetShip(int x1, int y1, int x2, int y2)
+        {
+            Ship ship = new Ship(x1, y1, x2, y2);
+            ships.Add(ship);
+            return ship;
+        }
+
         public void AddShip(IShip iShip)
         {
             Ship ship = (Ship)iShip;
-            ships.Add(ship);
+            //ships.Add(ship);
 
             //for (int i = 0; i < 10; i++)
             //    for (int j = 0; j < 10; j++)
@@ -124,11 +131,6 @@ namespace SeaFightGame
             //        cells[i, j].Ship = ship;
             //        ship.BindWithCell(cells[i, j]);
             //    }
-        }
-
-        public IShip GetShip(int x1, int y1, int x2, int y2)
-        {
-            return new Ship(x1, y1, x2, y2);
         }
     }
 }

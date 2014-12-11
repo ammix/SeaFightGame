@@ -20,8 +20,8 @@ namespace SeaFightGame
             Field field2 = new Field();
             algorithm = new AutoShipsSetup();
 
-            field1View = new ViewController(field1);
-            field2View = new ViewController(field2);
+            field1View = new PlayerViewControler(field1);
+            field2View = new EnemyViewControler(field2);
 
             this.field1View.Location = new System.Drawing.Point(12, 47);
             this.field1View.Size = new System.Drawing.Size(300, 300);

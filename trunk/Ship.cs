@@ -11,10 +11,10 @@ namespace SeaFightGame
         private int y2 = 0;
         private IList<Cell> cells= new List<Cell>();
 
-        public IEnumerable<ICell> GetCells()
-        {
-            return cells;
-        }
+        //public IEnumerable<ICell> GetCells()
+        //{
+        //    return cells;
+        //}
 
         public Ship(int x1, int y1, int x2, int y2)
         {
@@ -59,6 +59,8 @@ namespace SeaFightGame
         {
             cell.Ship = this;
             cells.Add(cell);
+            if (StateChanged != null)
+                StateChanged(this);
         }
 
         public void FreeCells()
@@ -80,11 +82,11 @@ namespace SeaFightGame
 
         public void Fire()
         {
-            if (Fired != null)
+            if (StateChanged != null)
                 if (IsFired)
-                    Fired(this);
+                    StateChanged(this);
         }
 
-        public event Action<IShip> Fired;
+        public event Action<IShip> StateChanged;
     }
 }
