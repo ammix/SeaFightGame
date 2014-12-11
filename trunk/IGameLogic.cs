@@ -8,5 +8,8 @@ namespace SeaFightGame.Model
     public interface IGameLogic
     {
         void Fire(int i, int j);
+        bool IsRun { get; }
+        void Start();
+        event Action<bool> MoveHasDone;
     }
 }

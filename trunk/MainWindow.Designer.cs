@@ -38,11 +38,12 @@
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.ImageKey = "(none)";
             this.button1.Location = new System.Drawing.Point(283, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
-            this.button1.Text = "Game Menu";
+            this.button1.Text = "Game Menu ";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -51,12 +52,12 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.startNewGameToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(164, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(160, 26);
             // 
             // startNewGameToolStripMenuItem
             // 
             this.startNewGameToolStripMenuItem.Name = "startNewGameToolStripMenuItem";
-            this.startNewGameToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.startNewGameToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.startNewGameToolStripMenuItem.Text = "Start New Game";
             // 
             // MainWindow
@@ -64,8 +65,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.ClientSize = new System.Drawing.Size(639, 416);
+            this.ClientSize = new System.Drawing.Size(659, 411);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.Text = "Sea Fight Game";

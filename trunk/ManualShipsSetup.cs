@@ -12,16 +12,16 @@ namespace SeaFightGame
         private int deckNumber = 3;
         private int direction = 0;
         private int shipNumber = 0;
+        private int x = 0;
+        private int y = 0;
 
         private IField field;
         public event Action<IShip> DrawShip;
         public event Action<IShip> EraseShip;
 
-        public ManualShipsSetup(IField field) //, Action<IShip> drawShip, Action<IShip> eraseShip
+        public ManualShipsSetup(IField field)
         {
             this.field = field;
-            //this.drawShip = drawShip;
-            //this.eraseShip = eraseShip;
         }
 
         public bool HasCompleted
@@ -62,6 +62,9 @@ namespace SeaFightGame
                     }
                     break;
                 case MouseButtons.Right:
+                    if (ship == null)
+                        return;
+
                     int tmp = direction;
                     direction += 1;
 
@@ -83,6 +86,9 @@ namespace SeaFightGame
 
         public void MoveNewShip(int i, int j)
         {
+            if (x == i && y == j)
+                return;
+
             if (!newShipFlag)
             {
                 int x1 = i, x2 = i;
@@ -102,6 +108,9 @@ namespace SeaFightGame
 
                 if (DrawShip != null)
                     DrawShip(ship);
+
+                x = x1;
+                y = y1;
             }
         }
 

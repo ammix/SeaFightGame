@@ -10,6 +10,7 @@ namespace SeaFightGame.Model
         private IField field1;
         private IField field2;
         private IShootAlgorithm ai;
+        private bool isRun = false;
 
         public GameLogic(IField field1, IField field2, IShootAlgorithm ai)
         {
@@ -25,10 +26,25 @@ namespace SeaFightGame.Model
                 do
                 {
                     ai.Shoot(out i, out j);
+                    if (MoveHasDone != null)
+                        MoveHasDone(false);
                 }
                 while (field1.Fire(i, j));
             }
-
+            if (MoveHasDone != null)
+                MoveHasDone(true);
         }
+
+        public bool IsRun
+        {
+            get { return isRun; }
+        }
+
+        public void Start()
+        {
+            isRun = true;
+        }
+
+        public event Action<bool> MoveHasDone;
     }
 }

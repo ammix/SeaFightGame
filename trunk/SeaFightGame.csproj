@@ -50,7 +50,7 @@
   <ItemGroup>
     <Compile Include="Cell.cs" />
     <Compile Include="CellCollection.cs" />
-    <Compile Include="EnemyViewControler.cs">
+    <Compile Include="Controlers\EnemyViewControler.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Field.cs" />
@@ -69,7 +69,7 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="ManualShipsSetup.cs" />
-    <Compile Include="PlayerViewControler.cs">
+    <Compile Include="Controlers\PlayerViewControler.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Program.cs" />
@@ -78,10 +78,10 @@
     <Compile Include="ShipCollection.cs" />
     <Compile Include="AutoShipsSetup.cs" />
     <Compile Include="ShootAlgorithm.cs" />
-    <Compile Include="ViewControler.cs">
+    <Compile Include="Controlers\ViewControler.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ViewControler.Designer.cs">
+    <Compile Include="Controlers\ViewControler.Designer.cs">
       <DependentUpon>ViewControler.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainWindow.resx">
@@ -96,7 +96,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ViewControler.resx">
+    <EmbeddedResource Include="Controlers\ViewControler.resx">
       <DependentUpon>ViewControler.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
