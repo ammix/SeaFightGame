@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using SeaFightGame.Model;
+using SeaFightGame.View;
 
 namespace SeaFightGame
 {

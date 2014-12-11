@@ -50,6 +50,9 @@
   <ItemGroup>
     <Compile Include="Cell.cs" />
     <Compile Include="CellCollection.cs" />
+    <Compile Include="EnemyViewControler.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Field.cs" />
     <Compile Include="FieldView.cs" />
     <Compile Include="GameLogic.cs" />
@@ -64,6 +67,9 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="ManualShipsSetup.cs" />
+    <Compile Include="PlayerViewControler.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />

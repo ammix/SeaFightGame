@@ -1,4 +1,4 @@
-﻿namespace SeaFightGame
+﻿namespace SeaFightGame.View
 {
     partial class ViewController
     {

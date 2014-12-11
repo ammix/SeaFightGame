@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SeaFightGame
+namespace SeaFightGame.Model
 {
     public class Ship: IShip
     {

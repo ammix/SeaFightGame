@@ -2,15 +2,16 @@
 using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using SeaFightGame.Model;
 
-namespace SeaFightGame
+namespace SeaFightGame.View
 {
     public partial class ViewController : UserControl
     {
         protected readonly IField field;
-        private const int X = 10;
-        private const int Y = 10;
-        private const int D = 20;
+        protected const int X = 10;
+        protected const int Y = 10;
+        protected const int CellSize = 20;
 
         public ViewController(IField field)
         {
@@ -41,42 +42,15 @@ namespace SeaFightGame
                 DrawShip(ship);
         }
 
-        //protected override void OnMouseDown(MouseEventArgs e)
-        //{
-        //    int i, j;
-        //    GetPoint(e.X, e.Y, out i, out j);
-
-        //    if (manualShipsSetup.HasCompleted)
-        //    {
-        //        //game.Fire(e.Button, i, j);
-        //        field.Fire(i, j);
-        //    }
-        //    else
-        //    {
-        //        manualShipsSetup.AddNewShip(e.Button, i, j);
-        //    }
-        //}
-
-        //protected override void OnMouseMove(MouseEventArgs e)
-        //{
-        //    if (!manualShipsSetup.HasCompleted)
-        //    {
-        //        int i, j;
-        //        GetPoint(e.X, e.Y, out i, out j);
-
-        //        manualShipsSetup.MoveNewShip(i, j);
-        //    }
-        //}
-
         protected void GetPoint(int x, int y, out int i, out int j)
         {
-            int width = Width - 2 * D;
-            int height = Height - 2 * D;
+            int width = Width - 2 * CellSize;
+            int height = Height - 2 * CellSize;
             int dx = width / X;
             int dy = height / Y;
 
-            i = (x - D) / dx;
-            j = (y - D) / dy;
+            i = (x - CellSize) / dx;
+            j = (y - CellSize) / dy;
         }
 
         private void DrawField()
@@ -87,43 +61,23 @@ namespace SeaFightGame
             Pen pen = new Pen(brush);
             StringFormat format = new StringFormat { Alignment = StringAlignment.Far };
 
-            int width = Width - 2 * D;
-            int height = Height - 2 * D;
+            int width = Width - 2 * CellSize;
+            int height = Height - 2 * CellSize;
             int dx = width / X;
             int dy = height / Y;
 
             for (int y = 0; y < Y; y++)
-                g.DrawString((y + 1).ToString(), font, brush, D, y * dy + D, format);
+                g.DrawString((y + 1).ToString(), font, brush, CellSize, y * dy + CellSize, format);
 
             string[] str = new[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
             for (int x = 0; x < X; x++)
-                g.DrawString(str[x], font, brush, x * dx + D + 10, 0);
+                g.DrawString(str[x], font, brush, x * dx + CellSize + 10, 0);
 
             for (int y = 0; y <= Y; y++)
-                g.DrawLine(pen, D, y * dy + D, width + D, y * dy + D);
+                g.DrawLine(pen, CellSize, y * dy + CellSize, width + CellSize, y * dy + CellSize);
 
             for (int x = 0; x <= X; x++)
-                g.DrawLine(pen, x * dx + D, D, x * dx + D, height + D);
-        }
-
-        protected void EraseShip(IShip ship)
-        {
-            Graphics g = Graphics.FromHwnd(this.Handle);
-            Brush brush = new SolidBrush(this.BackColor);
-            Pen pen = new Pen(brush);
-
-            int width = Width - 2 * D;
-            int height = Height - 2 * D;
-            int dx = width / X;
-            int dy = height / Y;
-
-            for (int i = ship.X1; i <= ship.X2; i++)
-                for (int j = ship.Y1; j <= ship.Y2; j++)
-                {
-                    int x = i * dx + D;
-                    int y = j * dy + D;
-                    g.DrawRectangle(pen, x + 1, y + 1, dx - 2, dy - 2);
-                }
+                g.DrawLine(pen, x * dx + CellSize, CellSize, x * dx + CellSize, height + CellSize);
         }
 
         protected void DrawShip(IShip ship)
@@ -133,13 +87,13 @@ namespace SeaFightGame
             Brush brush = new SolidBrush(isShipSetuped ? Color.Black : Color.Gray);
             Pen pen = new Pen(brush);
 
-            int width = Width - 2 * D;
-            int height = Height - 2 * D;
+            int width = Width - 2 * CellSize;
+            int height = Height - 2 * CellSize;
             int dx = width / X;
             int dy = height / Y;
 
-            int x = ship.X1 * dx + D;
-            int y = ship.Y1 * dy + D;
+            int x = ship.X1 * dx + CellSize;
+            int y = ship.Y1 * dy + CellSize;
             int w = (ship.X2 - ship.X1 + 1) * dx;
             int h = (ship.Y2 - ship.Y1 + 1) * dy;
 
@@ -158,8 +112,8 @@ namespace SeaFightGame
                 Pen pen1 = new Pen(brush1, 3);
                 Pen pen2 = new Pen(brush2);
 
-                int width = Width - 2 * D;
-                int height = Height - 2 * D;
+                int width = Width - 2 * CellSize;
+                int height = Height - 2 * CellSize;
                 int dx = width / X;
                 int dy = height / Y;
 
@@ -167,64 +121,18 @@ namespace SeaFightGame
                 {
                     int x = cell.X;
                     int y = cell.Y;
-                    g.DrawLine(pen1, x * dx + D + 3, y * dy + D + 3, (x + 1) * dx + D - 3, (y + 1) * dy + D - 3);
-                    g.DrawLine(pen1, x * dx + D + 3, (y + 1) * dy + D - 3, (x + 1) * dx + D - 3, y * dy + D + 3);
+                    g.DrawLine(pen1, x * dx + CellSize + 3, y * dy + CellSize + 3, (x + 1) * dx + CellSize - 3, (y + 1) * dy + CellSize - 3);
+                    g.DrawLine(pen1, x * dx + CellSize + 3, (y + 1) * dy + CellSize - 3, (x + 1) * dx + CellSize - 3, y * dy + CellSize + 3);
                     return;
                 }
                 else
                 {
                     int x = cell.X * dx + dx / 2 - 2;
                     int y = cell.Y * dy + dy / 2 - 2;
-                    g.DrawEllipse(pen2, x + D, y + D, 4, 4);
-                    g.FillEllipse(brush2, x + D, y + D, 4, 4);
+                    g.DrawEllipse(pen2, x + CellSize, y + CellSize, 4, 4);
+                    g.FillEllipse(brush2, x + CellSize, y + CellSize, 4, 4);
                 }
             }
-        }
-    }
-
-    public class PlayerViewControler : ViewController
-    {
-        ManualShipsSetup manualShipsSetup;
-
-        public PlayerViewControler(IField field): base(field)
-        {
-            manualShipsSetup = new ManualShipsSetup(field, DrawShip, EraseShip);
-        }
-
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            int i, j;
-            GetPoint(e.X, e.Y, out i, out j);
-
-            if (!manualShipsSetup.HasCompleted)
-            {
-                manualShipsSetup.AddNewShip(e.Button, i, j);
-            }
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            if (!manualShipsSetup.HasCompleted)
-            {
-                int i, j;
-                GetPoint(e.X, e.Y, out i, out j);
-
-                manualShipsSetup.MoveNewShip(i, j);
-            }
-        }
-    }
-
-    public class EnemyViewControler : ViewController
-    {
-        public EnemyViewControler(IField field): base(field)
-        { }
-
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            int i, j;
-            GetPoint(e.X, e.Y, out i, out j);
-
-            field.Fire(i, j);
         }
     }
 }

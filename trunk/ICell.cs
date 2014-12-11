@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SeaFightGame
+namespace SeaFightGame.Model
 {
     public interface ICell
     {
