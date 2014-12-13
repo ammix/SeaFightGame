@@ -1,4 +1,6 @@
-﻿namespace SeaFightGame.Model
+﻿//using SeaFightGame.Model;
+
+namespace SeaFightGame.Algorithm
 {
     public interface IShootAlgorithm
     {

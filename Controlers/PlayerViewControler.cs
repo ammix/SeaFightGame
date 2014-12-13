@@ -3,15 +3,16 @@ using System.Drawing;
 using System.Windows.Forms;
 using SeaFightGame.Model;
 using SeaFightGame.View;
+using SeaFightGame.Algorithm;
 
 namespace SeaFightGame.View
 {
     public class PlayerViewControler : ViewController
     {
-        private ManualShipsSetup manualShipsSetup;
+        private IPlayerShipSetup manualShipsSetup;
         private IGameLogic game;
 
-        public PlayerViewControler(IField field, IGameLogic game, ManualShipsSetup manualShipsSetup)
+        public PlayerViewControler(IField field, IGameLogic game, IPlayerShipSetup manualShipsSetup)
             : base(field)
         {
             this.manualShipsSetup = manualShipsSetup;

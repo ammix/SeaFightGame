@@ -1,8 +1,9 @@
 ﻿using System;
+using SeaFightGame.Model;
 
-namespace SeaFightGame.Model
+namespace SeaFightGame.Algorithm
 {
-    public interface IShipsSetupAlgorithm
+    public interface ICpuShipSetup
     {
         void Setup(IField field);
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SeaFightGame.Model
+namespace SeaFightGame.Algorithm
 {
     public interface IGameLogic
     {
