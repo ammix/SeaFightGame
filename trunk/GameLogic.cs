@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using SeaFightGame.Algorithm;
+using SeaFightGame.Model;
 
-namespace SeaFightGame.Model
+namespace SeaFightGame.Algorithm
 {
     public class GameLogic: IGameLogic
     {

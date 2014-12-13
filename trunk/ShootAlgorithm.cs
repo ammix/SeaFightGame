@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+//using SeaFightGame.Model;
 
-namespace SeaFightGame.Model
+namespace SeaFightGame.Algorithm
 {
     public class ShootAlgorithm: IShootAlgorithm
     {

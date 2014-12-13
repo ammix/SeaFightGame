@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SeaFightGame.Algorithm;
 
 namespace SeaFightGame.Model
 {
@@ -79,10 +80,10 @@ namespace SeaFightGame.Model
             ships.Clear();
         }
 
-        public void SetupShips(IShipsSetupAlgorithm algorithm)
-        {
-            algorithm.Setup(this);
-        }
+        //public void SetupShips(ICpuShipSetup algorithm)
+        //{
+        //    algorithm.Setup(this);
+        //}
 
         public bool Fire(int x, int y)
         {

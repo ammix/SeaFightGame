@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using SeaFightGame.Model;
+using SeaFightGame.Algorithm;
 
 namespace SeaFightGame.View
 {
@@ -24,14 +25,14 @@ namespace SeaFightGame.View
                 cell.Fired += new Action<ICell>(DrawCell);
         }
 
-        public void AutoSetupShips(IShipsSetupAlgorithm algorithm)
-        {
-            field.Clear();
-            algorithm.Setup(field);
-            foreach (IShip ship in field.GetShips())
-                ship.Fired += new Action<IShip>(DrawShip);
-            Refresh();
-        }
+        //public void AutoSetupShips(ICpuShipSetup algorithm)
+        //{
+        //    field.Clear();
+        //    algorithm.Setup(field);
+        //    foreach (IShip ship in field.GetShips())
+        //        ship.Fired += new Action<IShip>(DrawShip);
+        //    Refresh();
+        //}
 
         protected override void OnPaint(PaintEventArgs e)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using SeaFightGame.Model;
+using SeaFightGame.Algorithm;
 
 namespace SeaFightGame.View
 {
