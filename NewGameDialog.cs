@@ -15,5 +15,12 @@ namespace SeaFightGame
         {
             InitializeComponent();
         }
+
+        public bool CpuShipSetup { get; set; }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            CpuShipSetup = checkBox1.Checked;
+        }
     }
 }

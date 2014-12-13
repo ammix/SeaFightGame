@@ -7,19 +7,25 @@ using SeaFightGame.Algorithm;
 
 namespace SeaFightGame.View
 {
-    public partial class ViewController : UserControl
+    public partial class ViewControler : UserControl
     {
         protected readonly IField field;
+        protected readonly IGameLogic game;
         private const int X = 10;
         private const int Y = 10;
         private const int Shift = 20;
 
         //public IField field { get; set; }
 
-        public ViewController(IField field)
+        public ViewControler()
         {
             InitializeComponent();
+        }
+
+        public ViewControler(IField field, IGameLogic game): base()
+        {
             this.field = field;
+            this.game = game;
 
             foreach (ICell cell in field.GetCells())
                 cell.Fired += new Action<ICell>(DrawCell);
@@ -83,7 +89,7 @@ namespace SeaFightGame.View
                 g.DrawLine(pen, x * dx + Shift, Shift, x * dx + Shift, height + Shift);
         }
 
-        protected void DrawShip(IShip ship)
+        public void DrawShip(IShip ship)
         {
             Graphics g = Graphics.FromHwnd(this.Handle);
             bool isShipSetuped = field.GetCell(ship.X1, ship.Y1).HasShip;
@@ -105,7 +111,7 @@ namespace SeaFightGame.View
                 g.FillRectangle(new SolidBrush(Color.LightGray), x + 2, y + 2, w - 3, h - 3);
         }
 
-        protected void EraseShip(IShip ship)
+        public void EraseShip(IShip ship)
         {
             Graphics g = Graphics.FromHwnd(this.Handle);
             Brush brush = new SolidBrush(this.BackColor);

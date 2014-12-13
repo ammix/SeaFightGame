@@ -5,15 +5,10 @@ using SeaFightGame.Algorithm;
 
 namespace SeaFightGame.View
 {
-    public class EnemyViewControler : ViewController
+    public class Player2ViewControler : ViewControler
     {
-        private IGameLogic game;
-
-        public EnemyViewControler(IField field, IGameLogic game)
-            : base(field)
-        {
-            this.game = game;
-        }
+        public Player2ViewControler(IField field, IGameLogic game)
+            : base(field, game) { }
 
         protected override void OnMouseClick(MouseEventArgs e)
         {

@@ -61,7 +61,7 @@
             this.newGameToolStripMenuItem.Text = "Нова гра";
             this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
             // 
-            // MainWindow
+            // GameWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -70,7 +70,7 @@
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "MainWindow";
+            this.Name = "GameWindow";
             this.Text = "Морський бій";
             this.gameMenu.ResumeLayout(false);
             this.ResumeLayout(false);

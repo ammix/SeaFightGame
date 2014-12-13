@@ -10,13 +10,20 @@ namespace SeaFightGame.Algorithm
         private IField field1;
         private IField field2;
         private IShootAlgorithm ai;
+        private IPlayerShipSetup playerShipSetup;
         private bool isRun = false;
 
-        public GameLogic(IField field1, IField field2, IShootAlgorithm ai)
+        public GameLogic(IField field1, IField field2, IShootAlgorithm ai, IPlayerShipSetup playerShipSetup)
         {
             this.field1 = field1;
             this.field2 = field2;
             this.ai = ai;
+            this.playerShipSetup = playerShipSetup;
+        }
+
+        public IPlayerShipSetup PlayerShipSetupAlgorithm
+        {
+            get { return playerShipSetup; }
         }
 
         public void Fire(int i, int j)
@@ -26,13 +33,13 @@ namespace SeaFightGame.Algorithm
                 do
                 {
                     ai.Shoot(out i, out j);
-                    if (MoveHasDone != null)
-                        MoveHasDone(false);
+                    //if (Shooted != null)
+                    //    Shooted(false);
                 }
                 while (field1.Fire(i, j));
             }
-            if (MoveHasDone != null)
-                MoveHasDone(true);
+            //if (Shooted != null)
+            //    Shooted(true);
         }
 
         public bool IsRun
@@ -40,11 +47,12 @@ namespace SeaFightGame.Algorithm
             get { return isRun; }
         }
 
-        public void Start()
+        public void Start(bool flag)
         {
-            isRun = true;
+            isRun = flag;
+            playerShipSetup.Start();
         }
 
-        public event Action<bool> MoveHasDone;
+        //public event Action<bool> Shooted;
     }
 }

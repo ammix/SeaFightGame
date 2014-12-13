@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cell.cs" />
-    <Compile Include="Controlers\EnemyViewControler.cs">
+    <Compile Include="Controlers\Player2ViewControler.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Field.cs" />
@@ -67,8 +67,8 @@
     <Compile Include="GameWindow.Designer.cs">
       <DependentUpon>GameWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlayerShipsSetup.cs" />
-    <Compile Include="Controlers\PlayerViewControler.cs">
+    <Compile Include="PlayerShipSetup.cs" />
+    <Compile Include="Controlers\Player1ViewControler.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="NewGameDialog.cs">
