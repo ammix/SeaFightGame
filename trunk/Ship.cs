@@ -59,8 +59,8 @@ namespace SeaFightGame.Model
         {
             cell.Ship = this;
             cells.Add(cell);
-            if (StateChanged != null)
-                StateChanged(this);
+            if (Fired != null)
+                Fired(this);
         }
 
         public void FreeCells()
@@ -82,11 +82,11 @@ namespace SeaFightGame.Model
 
         public void Fire()
         {
-            if (StateChanged != null)
+            if (Fired != null)
                 if (IsFired)
-                    StateChanged(this);
+                    Fired(this);
         }
 
-        public event Action<IShip> StateChanged;
+        public event Action<IShip> Fired;
     }
 }

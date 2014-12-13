@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using SeaFightGame.Model;
 using SeaFightGame.View;
 
-namespace SeaFightGame
+namespace SeaFightGame.View
 {
     public class PlayerViewControler : ViewController
     {

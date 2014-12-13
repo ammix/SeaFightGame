@@ -1,7 +1,6 @@
 ﻿using System;
-using SeaFightGame.Model;
 
-namespace SeaFightGame
+namespace SeaFightGame.Model
 {
     public interface IShipsSetupAlgorithm
     {

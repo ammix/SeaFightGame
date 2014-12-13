@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SeaFightGame.Model;
 
-namespace SeaFightGame
+namespace SeaFightGame.Model
 {
     public static class ShipSetupUtils
     {
