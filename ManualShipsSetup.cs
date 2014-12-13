@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using SeaFightGame.Model;
 
-namespace SeaFightGame
+namespace SeaFightGame.Model
 {
     public class ManualShipsSetup
     {
@@ -12,8 +12,7 @@ namespace SeaFightGame
         private int deckNumber = 3;
         private int direction = 0;
         private int shipNumber = 0;
-        private int x = 0;
-        private int y = 0;
+        private int prev_x, prev_y, prev_dir;
 
         private IField field;
         public event Action<IShip> DrawShip;
@@ -57,8 +56,8 @@ namespace SeaFightGame
                             n = ShipSetupUtils.ShipsStock.Length - 1;
                         deckNumber = ShipSetupUtils.ShipsStock[n] - 1;
 
-                        if (DrawShip != null)
-                            DrawShip(ship);
+                        //if (DrawShip != null)
+                        //    DrawShip(ship);
                     }
                     break;
                 case MouseButtons.Right:
@@ -79,14 +78,21 @@ namespace SeaFightGame
                     if (x2 < 0 || x2 >= 10 || y2 < 0 || y2 >= 10)
                     {
                         direction = tmp;
+                        return;
                     }
+                    //if (EraseShip != null)
+                    //    EraseShip(ship);
+                    //field.UpdateShip(ship, x1, y1, x2, y2);
+                    //if (DrawShip != null)
+                    //    DrawShip(ship);
+                    //prev_dir = direction;
                     break;
             }
         }
 
         public void MoveNewShip(int i, int j)
         {
-            if (x == i && y == j)
+            if (i == prev_x && j == prev_y && direction == prev_dir)
                 return;
 
             if (!newShipFlag)
@@ -98,19 +104,21 @@ namespace SeaFightGame
                 if (ShipHasNeighbours(x1, y1, x2, y2))
                     return;
 
-                if (EraseShip != null)
-                    EraseShip(ship);
 
                 if (!(x2 < 0 || x2 >= 10 || y2 < 0 || y2 >= 10))
                 {
+                    if (EraseShip != null)
+                        EraseShip(ship);
+
                     field.UpdateShip(ship, x1, y1, x2, y2);
+
+                    if (DrawShip != null)
+                        DrawShip(ship);
+
+                    prev_x = x1;
+                    prev_y = y1;
+                    prev_dir = direction;
                 }
-
-                if (DrawShip != null)
-                    DrawShip(ship);
-
-                x = x1;
-                y = y1;
             }
         }
 

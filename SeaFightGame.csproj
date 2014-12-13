@@ -49,12 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cell.cs" />
-    <Compile Include="CellCollection.cs" />
     <Compile Include="Controlers\EnemyViewControler.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Field.cs" />
-    <Compile Include="FieldView.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="ICell.cs" />
     <Compile Include="IField.cs" />
@@ -75,7 +73,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
-    <Compile Include="ShipCollection.cs" />
     <Compile Include="AutoShipsSetup.cs" />
     <Compile Include="ShootAlgorithm.cs" />
     <Compile Include="Controlers\ViewControler.cs">

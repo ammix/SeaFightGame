@@ -22,7 +22,6 @@ namespace SeaFightGame
             algorithm = new AutoShipsSetup();
             IShootAlgorithm ai = new ShootAlgorithm();
             IGameLogic gameLogic = new GameLogic(field1, field2, ai);
-            gameLogic.MoveHasDone += DrawArrow;
             ManualShipsSetup shipsSetupLogic = new ManualShipsSetup(field1);
 
             field1View = new PlayerViewControler(field1, gameLogic, shipsSetupLogic);
@@ -44,39 +43,6 @@ namespace SeaFightGame
             Rectangle r = button1.ClientRectangle;
             int delta = (contextMenuStrip1.ClientRectangle.Width - r.Width) / 2;
             contextMenuStrip1.Show(button1.PointToScreen(new Point(r.Left - delta, r.Bottom)));
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            DrawArrow(false);
-        }
-
-        //private void DrawArrow(bool playerFlag)
-        //{
-        //    Graphics g = Graphics.FromHwnd(this.Handle);
-        //}
-
-        private void DrawArrow(bool direction)
-        {
-            Graphics g = Graphics.FromHwnd(this.Handle);
-            Color color;
-            Point p1, p2, p3;
-            if (!direction)
-            {
-                color = Color.Red;
-                p1 = new Point(315, 175);
-                p2 = new Point(315, 225);
-                p3 = new Point(345, 200);
-            }
-            else
-            {
-                color = Color.LawnGreen;
-                p1 = new Point(345, 175);
-                p2 = new Point(345, 225);
-                p3 = new Point(315, 200);
-            }
-            g.FillPolygon(new SolidBrush(color), new Point[] { p1, p2, p3 });
         }
     }
 }

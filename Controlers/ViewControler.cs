@@ -6,12 +6,14 @@ using SeaFightGame.Model;
 
 namespace SeaFightGame.View
 {
-    public abstract partial class ViewController : UserControl
+    public partial class ViewController : UserControl
     {
         protected readonly IField field;
         private const int X = 10;
         private const int Y = 10;
         private const int Shift = 20;
+
+        //public IField field { get; set; }
 
         public ViewController(IField field)
         {
@@ -27,7 +29,7 @@ namespace SeaFightGame.View
             field.Clear();
             algorithm.Setup(field);
             foreach (IShip ship in field.GetShips())
-                ship.StateChanged += new Action<IShip>(DrawShip);
+                ship.Fired += new Action<IShip>(DrawShip);
             Refresh();
         }
 
