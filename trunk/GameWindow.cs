@@ -14,9 +14,10 @@ namespace SeaFightGame
         private Field field2;
 
         ICpuShipSetup cpuShipSetup;
+        IGameLogic gameLogic;
 
-        private ViewController field1View;
-        private ViewController field2View;
+        private ViewControler field1View;
+        private ViewControler field2View;
 
         public GameWindow()
         {
@@ -28,11 +29,10 @@ namespace SeaFightGame
             cpuShipSetup = new CpuShipSetup();
             IPlayerShipSetup playerShipSetup = new PlayerShipSetup(field1);
             IShootAlgorithm shootAlgorithm = new ShootAlgorithm();
+            gameLogic = new GameLogic(field1, field2, shootAlgorithm, playerShipSetup);
 
-            IGameLogic gameLogic = new GameLogic(field1, field2, shootAlgorithm);
-
-            field1View = new PlayerViewControler(field1, gameLogic, playerShipSetup);
-            field2View = new EnemyViewControler(field2, gameLogic);
+            field1View = new Player1ViewControler(field1, gameLogic);
+            field2View = new Player2ViewControler(field2, gameLogic);
 
             this.field1View.Location = new System.Drawing.Point(12, 50);
             this.field1View.Size = new System.Drawing.Size(300, 300);
@@ -45,8 +45,6 @@ namespace SeaFightGame
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //field2View.AutoSetupShips(algorithm);
-
             Rectangle r = button1.ClientRectangle;
             int delta = (gameMenu.ClientRectangle.Width - r.Width) / 2;
             gameMenu.Show(button1.PointToScreen(new Point(r.Left - delta, r.Bottom)));
@@ -60,9 +58,16 @@ namespace SeaFightGame
                 //System.Windows.Forms.CommonDialog
             }
 
-            cpuShipSetup.Setup(field1);
+            field1.Clear();
+            field2.Clear();
+            cpuShipSetup.Setup(field2);
+            if (newGameWindow.CpuShipSetup)
+                cpuShipSetup.Setup(field1);
+            gameLogic.Start(newGameWindow.CpuShipSetup);
             field1View.Refresh();
+            field2View.Refresh();
 
+            // field2View.AutoSetupShips(algorithm);
             // AutoSetupShips(ICpuShipSetup algorithm)
         }
     }

@@ -63,7 +63,6 @@ namespace SeaFightGame.Algorithm
 
         public void Setup(IField field)
         {
-            field.Clear();
             for (int i = 0; i < ShipSetupUtils.ShipsStock.Length; i++)
             {
             Start:

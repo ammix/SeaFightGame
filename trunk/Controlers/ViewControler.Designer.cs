@@ -1,6 +1,6 @@
 ﻿namespace SeaFightGame.View
 {
-    partial class ViewController
+    partial class ViewControler
     {
         /// <summary> 
         /// Required designer variable.

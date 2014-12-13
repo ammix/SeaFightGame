@@ -9,7 +9,8 @@ namespace SeaFightGame.Algorithm
     {
         void Fire(int i, int j);
         bool IsRun { get; }
-        void Start();
-        event Action<bool> MoveHasDone;
+        void Start(bool flag);
+        IPlayerShipSetup PlayerShipSetupAlgorithm { get; }
+        //event Action<bool> Shooted;
     }
 }
