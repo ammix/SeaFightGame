@@ -58,6 +58,7 @@ namespace SeaFightGame.Algorithm
                             return;
 
                         ship = field.GetShip(x1, y1, x2, y2);
+                        //ship.Fired += DrawShip;
                         newShipFlag = false;
 
                         if (DrawShip != null)

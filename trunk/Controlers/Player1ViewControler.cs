@@ -27,7 +27,10 @@ namespace SeaFightGame.View
 
                     game.PlayerShipSetupAlgorithm.AddNewShip(e.Button, i, j);
                     if (game.PlayerShipSetupAlgorithm.HasCompleted)
+                    {
                         game.Start(true);
+                        BindWithShips();
+                    }
                 }
                 //else
                 //{

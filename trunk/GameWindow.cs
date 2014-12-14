@@ -28,7 +28,7 @@ namespace SeaFightGame
 
             cpuShipSetup = new CpuShipSetup();
             IPlayerShipSetup playerShipSetup = new PlayerShipSetup(field1);
-            IShootAlgorithm shootAlgorithm = new ShootAlgorithm();
+            IShootAlgorithm shootAlgorithm = new ShootAlgorithm(field1);
             gameLogic = new GameLogic(field1, field2, shootAlgorithm, playerShipSetup);
 
             field1View = new Player1ViewControler(field1, gameLogic);
@@ -55,20 +55,23 @@ namespace SeaFightGame
             NewGameDialog newGameWindow = new NewGameDialog();
             if (newGameWindow.ShowDialog() == DialogResult.OK)
             {
-                //System.Windows.Forms.CommonDialog
+                field1.Clear();
+                field2.Clear();
+
+                cpuShipSetup.Setup(field2);
+                if (newGameWindow.CpuShipSetup)
+                    cpuShipSetup.Setup(field1);
+                gameLogic.Start(newGameWindow.CpuShipSetup);
+
+                field1View.BindWithShips();
+                field2View.BindWithShips();
+
+                field1View.Refresh();
+                field2View.Refresh();
+
+                // field2View.AutoSetupShips(algorithm);
+                // AutoSetupShips(ICpuShipSetup algorithm)
             }
-
-            field1.Clear();
-            field2.Clear();
-            cpuShipSetup.Setup(field2);
-            if (newGameWindow.CpuShipSetup)
-                cpuShipSetup.Setup(field1);
-            gameLogic.Start(newGameWindow.CpuShipSetup);
-            field1View.Refresh();
-            field2View.Refresh();
-
-            // field2View.AutoSetupShips(algorithm);
-            // AutoSetupShips(ICpuShipSetup algorithm)
         }
     }
 }
