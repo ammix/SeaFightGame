@@ -16,7 +16,7 @@ namespace SeaFightGame.Model
         ICell GetCell(int i, int j);
 
         IEnumerable<ICell> GetCells();
-        IEnumerable<ICell> GetNotFiredCells();
+        IEnumerable<ICell> GetCells(Func<ICell, bool> predicate);
         IEnumerable<IShip> GetShips();
     }
 }
