@@ -40,6 +40,12 @@ namespace SeaFightGame.View
         //    Refresh();
         //}
 
+        public void BindWithShips()
+        {
+            foreach (IShip ship in field.GetShips())
+                ship.Fired += new Action<IShip>(DrawShip);
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             DrawField();
