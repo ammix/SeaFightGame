@@ -18,17 +18,18 @@ namespace SeaFightGame.Algorithm
 
         public void Shoot(out int i, out int j)
         {
-            //Func<int, int> sqr = delegate(int x) { return x*x; };
-            //Func<bool, ICell> 
+            var firedCells = from x in field.GetCells()
+                             where !x.IsFired
+                             select x;
+            var iterator = firedCells.GetEnumerator();
+            int n = firedCells.Count();
+            int next = r.Next(n);
+            for (int k = 0; k <= next; k++)
+                iterator.MoveNext();
+            ICell cell = iterator.Current;
 
-            //IEnumerable<ICell> cells = field.GetCells(delegate(ICell x) { return x.IsFired; }); //x-> x.IsFired
-            //IEnumerable<ICell> cells = field.GetCells((ICell x) => { return x.IsFired; });
-
-            IEnumerable<ICell> cells = field.GetCells(x => x.IsFired);
-            //var q = cells.GetEnumerator();
-            //q.MoveNext();
-            ICell[] cellArray = cells.ToArray();
-            ICell cell = cellArray[r.Next(cellArray.Length)];
+             //ICell[] cellArray = firedCells.ToArray();
+             //ICell cell_ = cellArray[next];
 
 
             i = cell.X;
