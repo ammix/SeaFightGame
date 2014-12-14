@@ -36,12 +36,12 @@ namespace SeaFightGame.Model
                     yield return cells[i, j];
         }
 
-        public IEnumerable<ICell> GetNotFiredCells()
+        public IEnumerable<ICell> GetCells(Func<ICell, bool> predicate)
         {
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 10; j++)
                 {
-                    if (!cells[i, j].IsFired)
+                    if (!predicate(cells[i,j]))
                         yield return cells[i, j];
                 }
         }
