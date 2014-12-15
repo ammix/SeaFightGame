@@ -51,7 +51,7 @@ namespace SeaFightGame.View
             DrawField();
 
             foreach (ICell cell in field.GetCells())
-                DrawCell(cell, false);
+                DrawCell(cell, false, false);
 
             foreach (Ship ship in field.GetShips())
                 DrawShip(ship);
@@ -98,7 +98,7 @@ namespace SeaFightGame.View
         public void DrawShip(IShip ship)
         {
             Graphics g = Graphics.FromHwnd(this.Handle);
-            bool isShipSetuped = field.GetCell(ship.X1, ship.Y1).HasShip;
+            bool isShipSetuped = ship.GetCells().GetEnumerator().MoveNext();
             Brush brush = new SolidBrush(isShipSetuped ? Color.Black : Color.Gray);
             Pen pen = new Pen(brush);
 
@@ -111,6 +111,9 @@ namespace SeaFightGame.View
             int y = ship.Y1 * dy + Shift;
             int w = (ship.X2 - ship.X1 + 1) * dx;
             int h = (ship.Y2 - ship.Y1 + 1) * dy;
+
+            foreach (ICell cell in ship.GetCells())
+                DrawCell(cell, false, true);
 
             g.DrawRectangle(pen, x + 1, y + 1, w - 2, h - 2);
             if (ship.IsFired)
@@ -139,10 +142,10 @@ namespace SeaFightGame.View
 
         private void DrawCell(ICell cell)
         {
-            DrawCell(cell, true);
+            DrawCell(cell, true, false);
         }
 
-        private void DrawCell(ICell cell, bool animation)
+        private void DrawCell(ICell cell, bool animation, bool hasShip)
         {
             if (cell.IsFired)
             {
@@ -162,7 +165,7 @@ namespace SeaFightGame.View
                 int j = cell.Y;
                 int x, y;
 
-                if (cell.HasShip)
+                if (hasShip)
                 {
                     g.DrawLine(pen1, i * dx + Shift + 3, j * dy + Shift + 3, (i + 1) * dx + Shift - 3, (j + 1) * dy + Shift - 3);
                     g.DrawLine(pen1, i * dx + Shift + 3, (j + 1) * dy + Shift - 3, (i + 1) * dx + Shift - 3, j * dy + Shift + 3);

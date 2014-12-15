@@ -28,7 +28,7 @@ namespace SeaFightGame
 
             cpuShipSetup = new CpuShipSetup();
             IPlayerShipSetup playerShipSetup = new PlayerShipSetup(field1);
-            IShootAlgorithm shootAlgorithm = new ShootAlgorithm(field1);
+            IShootAlgorithm shootAlgorithm = new ShootAlgorithm(field2.GetCells());
             gameLogic = new GameLogic(field1, field2, shootAlgorithm, playerShipSetup);
 
             field1View = new Player1ViewControler(field1, gameLogic);

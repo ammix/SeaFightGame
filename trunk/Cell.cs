@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SeaFightGame.Model
 {
@@ -11,14 +9,10 @@ namespace SeaFightGame.Model
 
         public int X { get; set; }
         public int Y { get; set; }
-        public Ship Ship { get; set; }
+        public IShip Ship { get; set; }
         public bool IsFired
         {
             get { return isFired; }
-        }
-        public bool HasShip
-        {
-            get { return Ship != null; }
         }
 
         public void Clear()
@@ -26,15 +20,19 @@ namespace SeaFightGame.Model
             isFired = false;
         }
 
-        public void Fire()
+        public ShootResult Fire()
         {
-            //bool tmp = isFired;
-            isFired = true;
-            if (Fired != null)
-                Fired(this);
-            if (Ship != null)
-                Ship.Fire();
-            //return tmp != isFired;
+            if (!isFired)
+            {
+                isFired = true;
+                if (Fired != null)
+                    Fired(this);
+
+                if (Ship != null)
+                    return Ship.Fire();
+            }
+
+            return ShootResult.Miss;
         }
 
         public event Action<ICell> Fired;

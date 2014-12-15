@@ -9,18 +9,18 @@ namespace SeaFightGame.Algorithm
     public class ShootAlgorithm: IShootAlgorithm
     {
         private static Random r = new Random(DateTime.Now.Millisecond);
-        private IField field;
+        private IEnumerable<ICell> cells;
 
-        public ShootAlgorithm(IField field)
+        public ShootAlgorithm(IEnumerable<ICell> cells)
         {
-            this.field = field;
+            this.cells = cells;
         }
 
-        public void Shoot(out int i, out int j)
+        public void Shoot(ShootResult prevShootResult, out int i, out int j)
         {
-            var firedCells = from x in field.GetCells()
-                             where !x.IsFired
-                             select x;
+            var firedCells = from icell in cells
+                             where !icell.IsFired
+                             select icell;
             var iterator = firedCells.GetEnumerator();
             int n = firedCells.Count();
             int next = r.Next(n);
@@ -28,19 +28,8 @@ namespace SeaFightGame.Algorithm
                 iterator.MoveNext();
             ICell cell = iterator.Current;
 
-             //ICell[] cellArray = firedCells.ToArray();
-             //ICell cell_ = cellArray[next];
-
-
             i = cell.X;
             j = cell.Y;
-
-            //for (int i = 0; i < 10; i++)
-            //    for (int j = 0; j < 10; j++)
-            //    {
-            //        if (!predicate(cells[i,j]) // !cells[i, j].IsFired)
-            //            yield return cells[i, j];
-            //    }
         }
     }
 }

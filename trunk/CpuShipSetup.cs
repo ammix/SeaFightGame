@@ -35,23 +35,27 @@ namespace SeaFightGame.Algorithm
             }
         }
 
-        public static bool IsCellFree(int x, int y, IField field)
+        public static bool HasShipContact(IField field, int x1, int y1, int x2, int y2)
         {
-            if (field.GetCell(x, y) == null)
-                return false;
+            if (field.GetCell(x1, y1) == null)
+                return true;
 
-            for (int i = x - 1; i <= x + 1; i++)
-                for (int j = y - 1; j <= y + 1; j++)
+            if (field.GetCell(x2, y2) == null)
+                return true;
+
+            for (int i = x1 - 1; i <= x2 + 1; i++)
+                for (int j = y1 - 1; j <= y2 + 1; j++)
                 {
-                    ICell cell = field.GetCell(i, j);
-                    if (cell != null)
-                    {
-                        if (cell.HasShip)
-                            return false;
-                    }
+                    //ICell cell = field.GetCell(x, y);
+                    ////if (cell != null && cell.HasShip)
+                    ////    return true;
+                    //if (cell != null)
+                    //{
+                        if (field.GetShip(i, j) != null)
+                            return true;
+                    //}
                 }
-
-            return true;
+            return false;
         }
 
         public static int[] ShipsStock = new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
@@ -75,7 +79,7 @@ namespace SeaFightGame.Algorithm
                     x1 = r.Next(10);
                     y1 = r.Next(10);
                 }
-                while (!ShipSetupUtils.IsCellFree(x1, y1, field));
+                while (ShipSetupUtils.HasShipContact(field, x1, y1, x1, y1));
 
                 do
                 {
@@ -83,7 +87,7 @@ namespace SeaFightGame.Algorithm
                     counter++;
                     if (counter > 10) goto Start;
                 }
-                while (!ShipSetupUtils.IsCellFree(x2, y2, field));
+                while (ShipSetupUtils.HasShipContact(field, x1, y1, x2, y2));
 
                 field.AddShip(field.GetShip(x1, y1, x2, y2));
             }

@@ -6,7 +6,7 @@ namespace SeaFightGame.Model
     {
         int X { get; set; }
         int Y { get; set; }
-        bool HasShip { get; }
+        ShootResult Fire();
         bool IsFired { get; }
         event Action<ICell> Fired;
     }
