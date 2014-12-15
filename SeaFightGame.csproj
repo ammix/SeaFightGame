@@ -52,6 +52,7 @@
     <Compile Include="Controlers\Player2ViewControler.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ObfuscatedField.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="ICell.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Controlers\ViewControler.Designer.cs">
       <DependentUpon>ViewControler.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShootResult.cs" />
     <EmbeddedResource Include="GameWindow.resx">
       <DependentUpon>GameWindow.cs</DependentUpon>
     </EmbeddedResource>

@@ -80,13 +80,20 @@ namespace SeaFightGame.Model
             }
         }
 
-        public void Fire()
+        public ShootResult Fire()
         {
             if (Fired != null)
-                if (IsFired)
-                    Fired(this);
+                Fired(this);
+
+            return IsFired ? ShootResult.Ruin : ShootResult.Hurt;
         }
 
         public event Action<IShip> Fired;
+
+
+        public IEnumerable<ICell> GetCells()
+        {
+            return cells;
+        }
     }
 }

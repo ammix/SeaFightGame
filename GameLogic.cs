@@ -28,18 +28,18 @@ namespace SeaFightGame.Algorithm
 
         public void Fire(int i, int j)
         {
-            if (!field2.Fire(i, j))
+            ShootResult shootResult = field2.Fire(i, j);
+            if (shootResult == ShootResult.Miss)
             {
                 do
                 {
-                    ai.Shoot(out i, out j);
-                    //if (Shooted != null)
-                    //    Shooted(false);
+                    ai.Shoot(shootResult, out i, out j);
+                    //if (field1.GetCell(i,j).IsFired)
+                    //    throw new ApplicationException();
+                    shootResult = field1.Fire(i, j);
                 }
-                while (field1.Fire(i, j));
+                while (shootResult== ShootResult.Hurt || shootResult == ShootResult.Ruin);
             }
-            //if (Shooted != null)
-            //    Shooted(true);
         }
 
         public bool IsRun
