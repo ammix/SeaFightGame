@@ -6,7 +6,7 @@ namespace SeaFightGame.Model
     {
         int X { get; set; }
         int Y { get; set; }
-        ShootResult Fire();
-        ShootResult State { get; }
+        bool Fire();
+        bool? HasShip { get; }
     }
 }

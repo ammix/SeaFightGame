@@ -90,7 +90,6 @@
     <Compile Include="Controlers\ViewControler.Designer.cs">
       <DependentUpon>ViewControler.cs</DependentUpon>
     </Compile>
-    <Compile Include="ShootResult.cs" />
     <EmbeddedResource Include="GameWindow.resx">
       <DependentUpon>GameWindow.cs</DependentUpon>
     </EmbeddedResource>

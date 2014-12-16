@@ -5,42 +5,27 @@ namespace SeaFightGame.Model
 {
     public class Cell: ICell
     {
-        private ShootResult state = ShootResult.Free;
+        private bool? hasShip = null;
 
         public int X { get; set; }
         public int Y { get; set; }
         public IShip Ship { get; set; }
-        public ShootResult State
+        public bool? HasShip
         {
-            get { return state; }
+            get { return hasShip; }
         }
 
         public void Clear()
         {
-            state = ShootResult.Free;
+            hasShip = null;
         }
 
-        public ShootResult Fire()
+        public bool Fire()
         {
-            if (state == ShootResult.Free)
-            {
-                state = Ship != null ? ShootResult.Hurt : ShootResult.Miss;
+            if (hasShip == null)
+                hasShip = Ship != null ? true : false;
 
-                //state = ShootResult.Miss;
-                //if (Ship != null)
-                //{
-                //    state = Ship.IsFired ? ShootResult.Ruin : ShootResult.Hurt;
-                //}
-
-                //state = Ship != null ? Ship.Fire() : ShootResult.Miss;
-
-                //return IsFired ? ShootResult.Ruin : ShootResult.Hurt;
-                //bool flag = cells.Count != 0;
-                //foreach (Cell cell in cells)
-                //    flag = flag && cell.State != ShootResult.Free;
-            }
-
-            return state;
+            return (bool)hasShip;
         }
     }
 }

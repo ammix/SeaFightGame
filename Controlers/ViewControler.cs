@@ -156,12 +156,11 @@ namespace SeaFightGame.View
             int j = cell.Y;
             int x, y;
 
-            switch (cell.State)
+            switch (cell.HasShip)
             {
-                case ShootResult.Free:
-                case ShootResult.Ruin:
+                case null:
                     break;
-                case ShootResult.Miss:
+                case false:
                     if (animation)
                     {
                         x = i * dx + Shift + 1;
@@ -175,7 +174,7 @@ namespace SeaFightGame.View
                     g.DrawEllipse(pen2, x, y, 4, 4);
                     g.FillEllipse(brush2, x, y, 4, 4);
                     break;
-                case ShootResult.Hurt:
+                case true:
                     g.DrawLine(pen1, i * dx + Shift + 3, j * dy + Shift + 3, (i + 1) * dx + Shift - 3, (j + 1) * dy + Shift - 3);
                     g.DrawLine(pen1, i * dx + Shift + 3, (j + 1) * dy + Shift - 3, (i + 1) * dx + Shift - 3, j * dy + Shift + 3);
                     break;
