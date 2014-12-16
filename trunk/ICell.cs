@@ -7,6 +7,6 @@ namespace SeaFightGame.Model
         int X { get; set; }
         int Y { get; set; }
         ShootResult Fire();
-        bool IsFired { get; }
+        ShootResult State { get; }
     }
 }

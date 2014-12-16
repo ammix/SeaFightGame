@@ -67,16 +67,16 @@ namespace SeaFightGame.Model
             {
                 bool flag = cells.Count != 0;
                 foreach (Cell cell in cells)
-                    flag = flag && cell.IsFired;
+                    flag = flag && cell.State != ShootResult.Free;
 
                 return flag;
             }
         }
 
-        public ShootResult Fire()
-        {
-            return IsFired ? ShootResult.Ruin : ShootResult.Hurt;
-        }
+        //public ShootResult Fire()
+        //{
+        //    return IsFired ? ShootResult.Ruin : ShootResult.Hurt;
+        //}
 
         public IEnumerable<ICell> GetCells()
         {

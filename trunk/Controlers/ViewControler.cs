@@ -105,8 +105,8 @@ namespace SeaFightGame.View
             int w = (ship.X2 - ship.X1 + 1) * dx;
             int h = (ship.Y2 - ship.Y1 + 1) * dy;
 
-            foreach (ICell cell in ship.GetCells())
-                DrawCell(cell, false, true);
+            //foreach (ICell cell in ship.GetCells())
+            //    DrawCell(cell, false, true);
 
             g.DrawRectangle(pen, x + 1, y + 1, w - 2, h - 2);
             if (ship.IsFired)
@@ -140,31 +140,28 @@ namespace SeaFightGame.View
 
         private void DrawCell(ICell cell, bool animation, bool hasShip)
         {
-            if (cell.IsFired)
+            Graphics g = Graphics.FromHwnd(this.Handle);
+            Brush brush0 = new SolidBrush(this.BackColor);
+            Brush brush1 = new SolidBrush(Color.IndianRed);
+            Brush brush2 = new SolidBrush(Color.Gray);
+            Brush brush3 = new SolidBrush(Color.Tomato);
+            Pen pen1 = new Pen(brush1, 3);
+            Pen pen2 = new Pen(brush2);
+
+            int width = Width - 2 * Shift;
+            int height = Height - 2 * Shift;
+            int dx = width / X;
+            int dy = height / Y;
+            int i = cell.X;
+            int j = cell.Y;
+            int x, y;
+
+            switch (cell.State)
             {
-                Graphics g = Graphics.FromHwnd(this.Handle);
-                Brush brush0 = new SolidBrush(this.BackColor);
-                Brush brush1 = new SolidBrush(Color.IndianRed);
-                Brush brush2 = new SolidBrush(Color.Gray);
-                Brush brush3 = new SolidBrush(Color.Tomato);
-                Pen pen1 = new Pen(brush1, 3);
-                Pen pen2 = new Pen(brush2);
-
-                int width = Width - 2 * Shift;
-                int height = Height - 2 * Shift;
-                int dx = width / X;
-                int dy = height / Y;
-                int i = cell.X;
-                int j = cell.Y;
-                int x, y;
-
-                if (field.GetShip(i,j) != null)
-                {
-                    g.DrawLine(pen1, i * dx + Shift + 3, j * dy + Shift + 3, (i + 1) * dx + Shift - 3, (j + 1) * dy + Shift - 3);
-                    g.DrawLine(pen1, i * dx + Shift + 3, (j + 1) * dy + Shift - 3, (i + 1) * dx + Shift - 3, j * dy + Shift + 3);
-                }
-                else
-                {
+                case ShootResult.Free:
+                case ShootResult.Ruin:
+                    break;
+                case ShootResult.Miss:
                     if (animation)
                     {
                         x = i * dx + Shift + 1;
@@ -177,7 +174,11 @@ namespace SeaFightGame.View
                     y = j * dy + dy / 2 + Shift - 2;
                     g.DrawEllipse(pen2, x, y, 4, 4);
                     g.FillEllipse(brush2, x, y, 4, 4);
-                }
+                    break;
+                case ShootResult.Hurt:
+                    g.DrawLine(pen1, i * dx + Shift + 3, j * dy + Shift + 3, (i + 1) * dx + Shift - 3, (j + 1) * dy + Shift - 3);
+                    g.DrawLine(pen1, i * dx + Shift + 3, (j + 1) * dy + Shift - 3, (i + 1) * dx + Shift - 3, j * dy + Shift + 3);
+                    break;
             }
         }
     }
