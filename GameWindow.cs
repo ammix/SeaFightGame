@@ -10,8 +10,8 @@ namespace SeaFightGame
 {
     public partial class GameWindow : Form
     {
-        private Field field1;
-        private Field field2;
+        private IField field1;
+        private IField field2;
 
         IAiShipSetup cpuShipSetup;
         IGameLogic gameLogic;
