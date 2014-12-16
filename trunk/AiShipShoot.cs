@@ -16,23 +16,22 @@ namespace SeaFightGame.Algorithm
             this.cells = cells;
         }
 
-        public void Shoot(ShootResult prevShootResult, out int i, out int j)
+        public void Shoot(out int i, out int j)
         {
-            var notShootedCells = from icell in cells
-                             where (icell.State == ShootResult.Free)
-                             select icell;
+            var notShootedCells = cells.Where(cell => cell.HasShip == null);
+
             var iterator = notShootedCells.GetEnumerator();
             int n = notShootedCells.Count();
             int next = r.Next(n);
             for (int k = 0; k <= next; k++)
                 iterator.MoveNext();
-            ICell cell = iterator.Current;
+            ICell celka = iterator.Current;
 
             //ICell[] array = firedCells.ToArray();
             //ICell c = array[next];
 
-            i = cell.X;
-            j = cell.Y;
+            i = celka.X;
+            j = celka.Y;
         }
     }
 }

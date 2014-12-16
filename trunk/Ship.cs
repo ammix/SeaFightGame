@@ -67,7 +67,7 @@ namespace SeaFightGame.Model
             {
                 bool flag = cells.Count != 0;
                 foreach (Cell cell in cells)
-                    flag = flag && cell.State != ShootResult.Free;
+                    flag = flag && cell.HasShip != null;
 
                 return flag;
             }

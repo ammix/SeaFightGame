@@ -87,18 +87,18 @@ namespace SeaFightGame.Model
             ships.Clear();
         }
 
-        public ShootResult Fire(int i, int j)
+        public bool Fire(int i, int j)
         {
-            ShootResult shootResult = ShootResult.Miss;
-            Cell cell = (Cell)GetCell(i, j);
-            if (cell.State == ShootResult.Free)
+            bool shootResult = false;
+            ICell cell = GetCell(i, j);
+            if (cell.HasShip == null)
             {
                 shootResult = cell.Fire();
 
                 if (CellFired != null)
                     CellFired(cell);
 
-                IShip ship = cell.Ship;
+                IShip ship = (cell as Cell).Ship;
                 if (ship != null && ship.IsFired && ShipFired != null)
                     ShipFired(ship);
             }

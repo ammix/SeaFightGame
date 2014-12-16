@@ -38,7 +38,7 @@ namespace SeaFightGame.Model
             field.Clear();
         }
 
-        public ShootResult Fire(int i, int j)
+        public bool Fire(int i, int j)
         {
             return field.Fire(i, j);
         }
