@@ -26,22 +26,11 @@ namespace SeaFightGame.View
         {
             this.field = field;
             this.game = game;
-
-            foreach (ICell cell in field.GetCells())
-                cell.Fired += new Action<ICell>(DrawCell);
         }
-
-        //public void AutoSetupShips(ICpuShipSetup algorithm)
-        //{
-        //    field.Clear();
-        //    algorithm.Setup(field);
-        //    foreach (IShip ship in field.GetShips())
-        //        ship.Fired += new Action<IShip>(DrawShip);
-        //    Refresh();
-        //}
 
         public void BindWithShips()
         {
+            field.CellFired += new Action<ICell>(DrawCell);
             field.ShipFired += new Action<IShip>(DrawShip);
         }
 
@@ -169,7 +158,7 @@ namespace SeaFightGame.View
                 int j = cell.Y;
                 int x, y;
 
-                if (hasShip)
+                if (field.GetShip(i,j) != null)
                 {
                     g.DrawLine(pen1, i * dx + Shift + 3, j * dy + Shift + 3, (i + 1) * dx + Shift - 3, (j + 1) * dy + Shift - 3);
                     g.DrawLine(pen1, i * dx + Shift + 3, (j + 1) * dy + Shift - 3, (i + 1) * dx + Shift - 3, j * dy + Shift + 3);

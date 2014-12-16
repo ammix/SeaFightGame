@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace SeaFightGame.Model
 {
-    public class ObfucatedField : IField
+    public class ObfuscatedField : IField
     {
         private IField field;
 
-        public ObfucatedField(IField field)
+        public ObfuscatedField(IField field)
         {
             this.field = field;
         }
@@ -58,7 +58,15 @@ namespace SeaFightGame.Model
             return field.GetCells();
         }
 
-        //public event Action<ICell> CellFired;
-        public event Action<IShip> ShipFired;
-    }
+        public event Action<ICell> CellFired
+        {
+            add { field.CellFired += value; }
+            remove { field.CellFired -= value; }
+        }
+        public event Action<IShip> ShipFired
+        {
+            add { field.ShipFired += value; }
+            remove { field.ShipFired -= value; }
+        }
+}
 }
