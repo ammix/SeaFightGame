@@ -6,9 +6,6 @@ namespace SeaFightGame.Model
 {
     public class Field : IField
     {
-        public static int X = 10;
-        public static int Y = 10;
-
         private List<Ship>  ships;
         private Cell[,] cells;
 
@@ -29,7 +26,7 @@ namespace SeaFightGame.Model
             //if (!(i >= 0 && i < X && j >= 0 && j < Y))
             //    throw new ArgumentOutOfRangeException(string.Format("i={0}, j={1}", i, j));
 
-            return i >= 0 && i < X && j >= 0 && j < Y ? cells[i, j] : null;
+            return i >= 0 && i < GameConstants.X && j >= 0 && j < GameConstants.Y ? cells[i, j] : null;
         }
 
         public IEnumerable<ICell> GetCells()
@@ -54,6 +51,7 @@ namespace SeaFightGame.Model
         public IShip GetShip(int i, int j)
         {
             Cell cell = (Cell)GetCell(i, j);
+            //return cell.Ship;
             return cell != null ? cell.Ship : null;
         }
 
@@ -94,9 +92,9 @@ namespace SeaFightGame.Model
         //    algorithm.Setup(this);
         //}
 
-        public ShootResult Fire(int x, int y)
+        public ShootResult Fire(int i, int j)
         {
-            return GetCell(x, y).Fire();
+            return GetCell(i, j).Fire();
 
             //ICell cell = GetCell(x, y);
             //if (cell.IsFired)

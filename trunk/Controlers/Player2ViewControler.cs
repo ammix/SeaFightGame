@@ -12,14 +12,16 @@ namespace SeaFightGame.View
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            if (game.IsRun)
-                if (e.Button == MouseButtons.Left)
-                {
-                    int i, j;
-                    GetPoint(e.X, e.Y, out i, out j);
-
-                    game.Fire(i, j);
-                }
+            if (IsInControlArea(e.X, e.Y))
+            {
+                if (game.IsRun)
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        int i, j;
+                        GetPoint(e.X, e.Y, out i, out j);
+                        game.Fire(i, j);
+                    }
+            }
         }
     }
 }

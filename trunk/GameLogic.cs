@@ -9,11 +9,11 @@ namespace SeaFightGame.Algorithm
     {
         private IField field1;
         private IField field2;
-        private IShootAlgorithm ai;
+        private IAiShipShoot ai;
         private IPlayerShipSetup playerShipSetup;
         private bool isRun = false;
 
-        public GameLogic(IField field1, IField field2, IShootAlgorithm ai, IPlayerShipSetup playerShipSetup)
+        public GameLogic(IField field1, IField field2, IAiShipShoot ai, IPlayerShipSetup playerShipSetup)
         {
             this.field1 = field1;
             this.field2 = field2;

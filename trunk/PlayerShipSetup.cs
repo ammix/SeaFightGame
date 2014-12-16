@@ -54,7 +54,7 @@ namespace SeaFightGame.Algorithm
                         x2 = i;
                         y2 = j;
                         ShipSetupUtils.GetShipTail(x1, y1, deckNumber, direction, out x2, out y2);
-                        if (ShipSetupUtils.HasShipContact(field, x1, y1, x2, y2))
+                        if (ShipSetupUtils.ShipHasContact(field, x1, y1, x2, y2))
                             return;
 
                         ship = field.GetShip(x1, y1, x2, y2);
@@ -115,7 +115,7 @@ namespace SeaFightGame.Algorithm
                 int y1 = j, y2 = j;
                 ShipSetupUtils.GetShipTail(x1, y1, deckNumber, direction, out x2, out y2);
 
-                if (ShipSetupUtils.HasShipContact(field, x1, y1, x2, y2))
+                if (ShipSetupUtils.ShipHasContact(field, x1, y1, x2, y2))
                     return;
 
 

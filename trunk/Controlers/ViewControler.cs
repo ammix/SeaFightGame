@@ -11,9 +11,9 @@ namespace SeaFightGame.View
     {
         protected readonly IField field;
         protected readonly IGameLogic game;
-        private const int X = 10;
-        private const int Y = 10;
-        private const int Shift = 20;
+        private const int X = GameConstants.X;
+        private const int Y = GameConstants.Y;
+        private const int Shift = GameConstants.SHIFT;
 
         //public IField field { get; set; }
 
@@ -66,6 +66,11 @@ namespace SeaFightGame.View
 
             i = (x - Shift) / dx;
             j = (y - Shift) / dy;
+        }
+
+        protected bool IsInControlArea(int x, int y)
+        {
+            return (x > Shift && x < Width - Shift && y > Shift && y < Width - Shift);
         }
 
         private void DrawField()
