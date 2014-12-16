@@ -96,15 +96,16 @@ namespace SeaFightGame.Model
         {
             ShootResult shootResult = ShootResult.Miss;
             Cell cell = (Cell)GetCell(i, j);
-            if (!cell.IsFired)
+            if (cell.State == ShootResult.Free)
             {
-                Ship ship = (Ship)cell.Ship;
                 shootResult = cell.Fire();
 
                 if (CellFired != null)
                     CellFired(cell);
 
-                if (shootResult == ShootResult.Ruin || shootResult == ShootResult.Hurt)
+                Ship ship = (Ship)cell.Ship;
+                if (ship!=null && ship.IsFired)
+                //if (shootResult == ShootResult.Ruin /*|| shootResult == ShootResult.Hurt*/)
                     if (ShipFired != null)
                         ShipFired(ship);
             }

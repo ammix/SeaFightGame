@@ -7,6 +7,7 @@ namespace SeaFightGame.Model
 {
     public enum ShootResult
     {
+        Free,
         Miss,
         Hurt,
         Ruin
