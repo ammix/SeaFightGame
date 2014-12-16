@@ -8,6 +8,5 @@ namespace SeaFightGame.Model
         int Y { get; set; }
         ShootResult Fire();
         bool IsFired { get; }
-        event Action<ICell> Fired;
     }
 }

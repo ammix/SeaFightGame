@@ -94,14 +94,20 @@ namespace SeaFightGame.Model
 
         public ShootResult Fire(int i, int j)
         {
+            ShootResult shootResult = ShootResult.Miss;
             Cell cell = (Cell)GetCell(i, j);
-            Ship ship = (Ship)cell.Ship;
-            ShootResult shootResult = cell.Fire();
+            if (!cell.IsFired)
+            {
+                Ship ship = (Ship)cell.Ship;
+                shootResult = cell.Fire();
 
-            if (shootResult == ShootResult.Ruin || shootResult == ShootResult.Hurt)
-                if (ShipFired != null)
-                    ShipFired(ship);
+                if (CellFired != null)
+                    CellFired(cell);
 
+                if (shootResult == ShootResult.Ruin || shootResult == ShootResult.Hurt)
+                    if (ShipFired != null)
+                        ShipFired(ship);
+            }
             return shootResult;
 
             //ICell cell = GetCell(x, y);
@@ -160,7 +166,7 @@ namespace SeaFightGame.Model
             //    }
         }
 
-        //public event Action<ICell> CellFired;
+        public event Action<ICell> CellFired;
         public event Action<IShip> ShipFired;
     }
 }

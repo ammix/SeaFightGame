@@ -27,8 +27,6 @@ namespace SeaFightGame.Model
             if (!isFired)
             {
                 isFired = true;
-                if (Fired != null)
-                    Fired(this);
 
                 if (Ship != null)
                     return Ship.Fire();
@@ -36,7 +34,5 @@ namespace SeaFightGame.Model
 
             return ShootResult.Miss;
         }
-
-        public event Action<ICell> Fired;
     }
 }

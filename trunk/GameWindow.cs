@@ -12,6 +12,7 @@ namespace SeaFightGame
     {
         private IField field1;
         private IField field2;
+        private IField obfuscatedField2;
 
         IAiShipSetup cpuShipSetup;
         IGameLogic gameLogic;
@@ -25,14 +26,15 @@ namespace SeaFightGame
 
             field1 = new Field();
             field2 = new Field();
+            obfuscatedField2 = new ObfuscatedField(field2);
 
             cpuShipSetup = new AiShipSetup();
             IPlayerShipSetup playerShipSetup = new PlayerShipSetup(field1);
             IAiShipShoot shootAlgorithm = new AiShipShoot(field1.GetCells());
-            gameLogic = new GameLogic(field1, field2, shootAlgorithm, playerShipSetup);
+            gameLogic = new GameLogic(field1, obfuscatedField2, shootAlgorithm, playerShipSetup);
 
             field1View = new Player1ViewControler(field1, gameLogic);
-            field2View = new Player2ViewControler(field2, gameLogic);
+            field2View = new Player2ViewControler(obfuscatedField2, gameLogic);
 
             this.field1View.Location = new System.Drawing.Point(12, 50);
             this.field1View.Size = new System.Drawing.Size(300, 300);
