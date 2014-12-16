@@ -14,6 +14,5 @@ namespace SeaFightGame.Model
         bool IsFired { get; }
         ShootResult Fire();
         IEnumerable<ICell> GetCells();
-        event Action<IShip> Fired;
     }
 }
