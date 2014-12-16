@@ -43,9 +43,6 @@ namespace SeaFightGame.View
         public void BindWithShips()
         {
             field.ShipFired += new Action<IShip>(DrawShip);
-
-            //foreach (IShip ship in field.GetShips())
-            //    ship.Fired += new Action<IShip>(DrawShip);
         }
 
         protected override void OnPaint(PaintEventArgs e)

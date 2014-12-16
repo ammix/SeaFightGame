@@ -11,11 +11,6 @@ namespace SeaFightGame.Model
         private int y2 = 0;
         private IList<Cell> cells= new List<Cell>();
 
-        //public IEnumerable<ICell> GetCells()
-        //{
-        //    return cells;
-        //}
-
         public Ship(int x1, int y1, int x2, int y2)
         {
             this.x1 = Math.Min(x1, x2);
@@ -59,8 +54,6 @@ namespace SeaFightGame.Model
         {
             cell.Ship = this;
             cells.Add(cell);
-            if (Fired != null)
-                Fired(this);
         }
 
         public void FreeCells()
@@ -82,14 +75,8 @@ namespace SeaFightGame.Model
 
         public ShootResult Fire()
         {
-            if (Fired != null)
-                Fired(this);
-
             return IsFired ? ShootResult.Ruin : ShootResult.Hurt;
         }
-
-        public event Action<IShip> Fired;
-
 
         public IEnumerable<ICell> GetCells()
         {
