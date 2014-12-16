@@ -6,12 +6,12 @@ using SeaFightGame.Model;
 
 namespace SeaFightGame.Algorithm
 {
-    public class ShootAlgorithm: IShootAlgorithm
+    public class AiShipShoot: IAiShipShoot
     {
         private static Random r = new Random(DateTime.Now.Millisecond);
         private IEnumerable<ICell> cells;
 
-        public ShootAlgorithm(IEnumerable<ICell> cells)
+        public AiShipShoot(IEnumerable<ICell> cells)
         {
             this.cells = cells;
         }
@@ -27,6 +27,9 @@ namespace SeaFightGame.Algorithm
             for (int k = 0; k <= next; k++)
                 iterator.MoveNext();
             ICell cell = iterator.Current;
+
+            //ICell[] array = firedCells.ToArray();
+            //ICell c = array[next];
 
             i = cell.X;
             j = cell.Y;

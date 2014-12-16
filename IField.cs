@@ -18,5 +18,8 @@ namespace SeaFightGame.Model
 
         IEnumerable<ICell> GetCells();
         IEnumerable<IShip> GetShips();
+
+        event Action<ICell> CellFired;
+        event Action<IShip> ShipFired;
     }
 }

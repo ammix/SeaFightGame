@@ -22,12 +22,12 @@ namespace SeaFightGame.Model
             this.y1 = Math.Min(y1, y2);
             this.x2 = Math.Max(x1, x2);
             this.y2 = Math.Max(y1, y2);
-            if (this.x2 >= Field.X)
+            if (this.x2 >= GameConstants.X)
             {
                 this.x1 = 9 - (this.x2 - this.x1);
                 this.x2 = 9;
             }
-            if (this.y2 >= Field.Y)
+            if (this.y2 >= GameConstants.Y)
             {
                 this.y1 = 9 - (this.y2 - this.y1);
                 this.y2 = 9;

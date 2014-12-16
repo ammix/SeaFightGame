@@ -18,24 +18,27 @@ namespace SeaFightGame.View
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (!game.IsRun)
+            if (IsInControlArea(e.X, e.Y))
             {
-                if (!game.PlayerShipSetupAlgorithm.HasCompleted)
+                if (!game.IsRun)
                 {
-                    int i, j;
-                    GetPoint(e.X, e.Y, out i, out j);
-
-                    game.PlayerShipSetupAlgorithm.AddNewShip(e.Button, i, j);
-                    if (game.PlayerShipSetupAlgorithm.HasCompleted)
+                    if (!game.PlayerShipSetupAlgorithm.HasCompleted)
                     {
-                        game.Start(true);
-                        BindWithShips();
+                        int i, j;
+                        GetPoint(e.X, e.Y, out i, out j);
+
+                        game.PlayerShipSetupAlgorithm.AddNewShip(e.Button, i, j);
+                        if (game.PlayerShipSetupAlgorithm.HasCompleted)
+                        {
+                            game.Start(true);
+                            BindWithShips();
+                        }
                     }
+                    //else
+                    //{
+                    //    game.Start();
+                    //}
                 }
-                //else
-                //{
-                //    game.Start();
-                //}
             }
         }
 

@@ -2,7 +2,7 @@
 
 namespace SeaFightGame.Algorithm
 {
-    public interface IShootAlgorithm
+    public interface IAiShipShoot
     {
         void Shoot(ShootResult shootResult, out int i, out int j);
     }

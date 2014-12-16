@@ -3,7 +3,7 @@ using SeaFightGame.Model;
 
 namespace SeaFightGame.Algorithm
 {
-    public interface ICpuShipSetup
+    public interface IAiShipSetup
     {
         void Setup(IField field);
     }

@@ -52,6 +52,7 @@
     <Compile Include="Controlers\Player2ViewControler.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="GameConstants.cs" />
     <Compile Include="ObfuscatedField.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="GameLogic.cs" />
@@ -81,8 +82,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
-    <Compile Include="CpuShipSetup.cs" />
-    <Compile Include="ShootAlgorithm.cs" />
+    <Compile Include="AiShipSetup.cs" />
+    <Compile Include="AiShipShoot.cs" />
     <Compile Include="Controlers\ViewControler.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -117,6 +118,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

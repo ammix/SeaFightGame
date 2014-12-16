@@ -13,7 +13,7 @@ namespace SeaFightGame
         private Field field1;
         private Field field2;
 
-        ICpuShipSetup cpuShipSetup;
+        IAiShipSetup cpuShipSetup;
         IGameLogic gameLogic;
 
         private ViewControler field1View;
@@ -26,9 +26,9 @@ namespace SeaFightGame
             field1 = new Field();
             field2 = new Field();
 
-            cpuShipSetup = new CpuShipSetup();
+            cpuShipSetup = new AiShipSetup();
             IPlayerShipSetup playerShipSetup = new PlayerShipSetup(field1);
-            IShootAlgorithm shootAlgorithm = new ShootAlgorithm(field2.GetCells());
+            IAiShipShoot shootAlgorithm = new AiShipShoot(field1.GetCells());
             gameLogic = new GameLogic(field1, field2, shootAlgorithm, playerShipSetup);
 
             field1View = new Player1ViewControler(field1, gameLogic);
