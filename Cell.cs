@@ -24,13 +24,13 @@ namespace SeaFightGame.Model
         {
             if (state == ShootResult.Free)
             {
-                //state = Ship != null ? ShootResult.Hurt : ShootResult.Miss;
+                state = Ship != null ? ShootResult.Hurt : ShootResult.Miss;
 
-                state = ShootResult.Miss;
-                if (Ship != null)
-                {
-                    state = Ship.IsFired ? ShootResult.Ruin : ShootResult.Hurt;
-                }
+                //state = ShootResult.Miss;
+                //if (Ship != null)
+                //{
+                //    state = Ship.IsFired ? ShootResult.Ruin : ShootResult.Hurt;
+                //}
 
                 //state = Ship != null ? Ship.Fire() : ShootResult.Miss;
 

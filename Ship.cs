@@ -73,11 +73,6 @@ namespace SeaFightGame.Model
             }
         }
 
-        //public ShootResult Fire()
-        //{
-        //    return IsFired ? ShootResult.Ruin : ShootResult.Hurt;
-        //}
-
         public IEnumerable<ICell> GetCells()
         {
             return cells;
