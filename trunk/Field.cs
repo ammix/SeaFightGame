@@ -87,11 +87,6 @@ namespace SeaFightGame.Model
             ships.Clear();
         }
 
-        //public void SetupShips(ICpuShipSetup algorithm)
-        //{
-        //    algorithm.Setup(this);
-        //}
-
         public ShootResult Fire(int i, int j)
         {
             ShootResult shootResult = ShootResult.Miss;
@@ -103,11 +98,9 @@ namespace SeaFightGame.Model
                 if (CellFired != null)
                     CellFired(cell);
 
-                Ship ship = (Ship)cell.Ship;
-                if (ship!=null && ship.IsFired)
-                //if (shootResult == ShootResult.Ruin /*|| shootResult == ShootResult.Hurt*/)
-                    if (ShipFired != null)
-                        ShipFired(ship);
+                IShip ship = cell.Ship;
+                if (ship != null && ship.IsFired && ShipFired != null)
+                    ShipFired(ship);
             }
             return shootResult;
 
