@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using SeaFightGame.Algorithm;
+using System.Linq;
 
 namespace SeaFightGame.Model
 {
     public class Field : IField
     {
-        private List<Ship>  ships;
+        protected List<Ship> ships;
         private Cell[,] cells;
 
         public Field()
@@ -41,18 +42,17 @@ namespace SeaFightGame.Model
             return ships;
         }
 
+        public virtual IShip GetShip(int i, int j)
+        {
+            Cell cell = (Cell)GetCell(i, j);
+            return cell != null ? cell.Ship : null;
+        }
+
         public IShip GetShip(int x1, int y1, int x2, int y2)
         {
             Ship ship = new Ship(x1, y1, x2, y2);
             ships.Add(ship);
             return ship;
-        }
-
-        public IShip GetShip(int i, int j)
-        {
-            Cell cell = (Cell)GetCell(i, j);
-            //return cell.Ship;
-            return cell != null ? cell.Ship : null;
         }
 
         public void AddShip(IShip iShip)
@@ -94,7 +94,15 @@ namespace SeaFightGame.Model
 
         public ShootResult Fire(int i, int j)
         {
-            return GetCell(i, j).Fire();
+            Cell cell = (Cell)GetCell(i, j);
+            Ship ship = (Ship)cell.Ship;
+            ShootResult shootResult = cell.Fire();
+
+            if (shootResult == ShootResult.Ruin || shootResult == ShootResult.Hurt)
+                if (ShipFired != null)
+                    ShipFired(ship);
+
+            return shootResult;
 
             //ICell cell = GetCell(x, y);
             //if (cell.IsFired)
@@ -151,5 +159,8 @@ namespace SeaFightGame.Model
             //        ship.BindWithCell(cells[i, j]);
             //    }
         }
+
+        //public event Action<ICell> CellFired;
+        public event Action<IShip> ShipFired;
     }
 }
