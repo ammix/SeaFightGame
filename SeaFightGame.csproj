@@ -61,8 +61,8 @@
     <Compile Include="IGameLogic.cs" />
     <Compile Include="IPlayerShipSetup.cs" />
     <Compile Include="IShip.cs" />
-    <Compile Include="IShipsSetupAlgorithm.cs" />
-    <Compile Include="IShootAlgorithm.cs" />
+    <Compile Include="IShipsSetup.cs" />
+    <Compile Include="IAiShipShoot.cs" />
     <Compile Include="GameWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +90,7 @@
     <Compile Include="Controlers\ViewControler.Designer.cs">
       <DependentUpon>ViewControler.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShipSetupUtils.cs" />
     <EmbeddedResource Include="GameWindow.resx">
       <DependentUpon>GameWindow.cs</DependentUpon>
     </EmbeddedResource>

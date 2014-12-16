@@ -26,9 +26,11 @@ namespace SeaFightGame.View
         {
             this.field = field;
             this.game = game;
+
+            BindWithShips();
         }
 
-        public void BindWithShips()
+        private void BindWithShips()
         {
             field.CellFired += new Action<ICell>(DrawCell);
             field.ShipFired += new Action<IShip>(DrawShip);

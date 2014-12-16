@@ -37,12 +37,12 @@ namespace SeaFightGame.Model
                     yield return cells[i, j];
         }
 
-        public virtual IEnumerable<IShip> GetShips()
+        public IEnumerable<IShip> GetShips()
         {
             return ships;
         }
 
-        public virtual IShip GetShip(int i, int j)
+        public IShip GetShip(int i, int j)
         {
             Cell cell = (Cell)GetCell(i, j);
             return cell != null ? cell.Ship : null;
@@ -91,7 +91,7 @@ namespace SeaFightGame.Model
         {
             bool shootResult = false;
             ICell cell = GetCell(i, j);
-            if (cell.HasShip == null)
+            if (cell != null && cell.HasShip == null)
             {
                 shootResult = cell.Fire();
 
@@ -99,47 +99,20 @@ namespace SeaFightGame.Model
                     CellFired(cell);
 
                 IShip ship = (cell as Cell).Ship;
-                if (ship != null && ship.IsFired && ShipFired != null)
-                    ShipFired(ship);
+                if (ship != null && ship.IsFired)
+                {
+                    for (i = ship.X1 - 1; i <= ship.X2 + 1; i++)
+                        for (j = ship.Y1 - 1; j <= ship.Y2 + 1; j++)
+                        {
+                            Fire(i, j);
+                        }
+
+                    if (ShipFired != null)
+                        ShipFired(ship);
+                }
             }
             return shootResult;
-
-            //ICell cell = GetCell(x, y);
-            //if (cell.IsFired)
-            //{
-            //    return ShootResult.Miss;
-            //}
-            //else
-            //{
-            //    return cell.Fire();
-            //}
-
-
-            //if (!cell.IsFired)
-            //{
-            //    /*bool isHit = */cell.Fire();
-            //    if (cell.HasShip && cell.Ship.IsFired)
-            //    {
-            //        int x1 = cell.Ship.X1;
-            //        int x2 = cell.Ship.X2;
-            //        int y1 = cell.Ship.Y1;
-            //        int y2 = cell.Ship.Y2;
-            //        for (int i = x1 - 1; i <= x2 + 1; i++)
-            //            for (int j = y1 - 1; j <= y2 + 1; j++)
-            //            {
-            //                cell = (Cell)GetCell(i, j);
-            //                if (cell != null && !cell.IsFired)
-            //                    cell.Fire();
-            //            }
-            //    }
-            //}
-            //return (GetCell(x, y) as Cell).HasShip;
         }
-
-        //public IShip GetShip(int i, int j)
-        //{
-        //    return (GetCell(i, j) as Cell).Ship;
-        //}
 
         public void UpdateShip(IShip iShip, int x1, int y1, int x2, int y2)
         {

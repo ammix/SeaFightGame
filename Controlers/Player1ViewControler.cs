@@ -31,7 +31,6 @@ namespace SeaFightGame.View
                         if (game.PlayerShipSetupAlgorithm.HasCompleted)
                         {
                             game.Start(true);
-                            BindWithShips();
                         }
                     }
                     //else

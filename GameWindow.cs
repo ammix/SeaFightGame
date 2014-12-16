@@ -14,7 +14,7 @@ namespace SeaFightGame
         private IField field2;
         private IField obfuscatedField2;
 
-        IAiShipSetup cpuShipSetup;
+        IAiShipSetup aiShipSetup;
         IGameLogic gameLogic;
 
         private ViewControler field1View;
@@ -28,7 +28,7 @@ namespace SeaFightGame
             field2 = new Field();
             obfuscatedField2 = new ObfuscatedField(field2);
 
-            cpuShipSetup = new AiShipSetup();
+            aiShipSetup = new AiShipSetup();
             IPlayerShipSetup playerShipSetup = new PlayerShipSetup(field1);
             IAiShipShoot shootAlgorithm = new AiShipShoot(field1.GetCells());
             gameLogic = new GameLogic(field1, obfuscatedField2, shootAlgorithm, playerShipSetup);
@@ -54,19 +54,16 @@ namespace SeaFightGame
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewGameDialog newGameWindow = new NewGameDialog();
-            if (newGameWindow.ShowDialog() == DialogResult.OK)
+            NewGameDialog newGameDialog = new NewGameDialog();
+            if (newGameDialog.ShowDialog() == DialogResult.OK)
             {
                 field1.Clear();
                 field2.Clear();
 
-                cpuShipSetup.Setup(field2);
-                if (newGameWindow.CpuShipSetup)
-                    cpuShipSetup.Setup(field1);
-                gameLogic.Start(newGameWindow.CpuShipSetup);
-
-                field1View.BindWithShips();
-                field2View.BindWithShips();
+                aiShipSetup.Setup(field2);
+                if (newGameDialog.AiShipSetup)
+                    aiShipSetup.Setup(field1);
+                gameLogic.Start(newGameDialog.AiShipSetup);
 
                 field1View.Refresh();
                 field2View.Refresh();
