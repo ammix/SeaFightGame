@@ -10,9 +10,6 @@ namespace SeaFightGame.Algorithm
     {
         private static Random r = new Random(DateTime.Now.Millisecond);
         private IField field;
-        private int i=0;
-        private int j=0;
-        private bool budemDobivati = false;
 
         public AiShipShoot(IField field)
         {
@@ -33,19 +30,23 @@ namespace SeaFightGame.Algorithm
             return iterator.Current;
         }
 
-        public void Shoot(out int i, out int j)
+        public void GetShoot(out int i, out int j)
         {
             ICell cell = null;
+            List<ICell> list;
             // З'ясовуємо, чи потрібно добивати
             // Отримуємо колекцію усіх комірок, які малються хрестиком
             IEnumerable<ICell> crossCells = field.GetCells().Where(c => c.HasShip == true && field.GetShip(c.X, c.Y) == null);
+            //ICell cell = field.GetCell(i, j);
+            //IShip ship = field.GetShip(i, j);
+            //if (ship == null && cell.HasShip == true)
             switch (crossCells.Count())
             {
                 case 1:
                     cell = GetCell(crossCells, 0);
                     i = cell.X;
                     j = cell.Y;
-                    List<ICell> list = new List<ICell>();
+                    list = new List<ICell>();
                     AddCellToList(list, field.GetCell(i + 1, j));
                     AddCellToList(list, field.GetCell(i, j + 1));
                     AddCellToList(list, field.GetCell(i - 1, j));
@@ -59,18 +60,18 @@ namespace SeaFightGame.Algorithm
                     ICell cell1 = GetCell(crossCells, 0);
                     ICell cell2 = GetCell(crossCells, crossCells.Count() - 1);
                     //Order(ref cell1, ref cell2);
-                    List<ICell> list2 = new List<ICell>();
+                    list = new List<ICell>();
                     if (cell1.X - cell2.X == 0)
                     {
-                        AddCellToList(list2, field.GetCell(cell1.X, cell1.Y-1));
-                        AddCellToList(list2, field.GetCell(cell2.X, cell2.Y+1));
+                        AddCellToList(list, field.GetCell(cell1.X, cell1.Y-1));
+                        AddCellToList(list, field.GetCell(cell2.X, cell2.Y+1));
                     }
                     else
                     {
-                        AddCellToList(list2, field.GetCell(cell1.X - 1, cell1.Y));
-                        AddCellToList(list2, field.GetCell(cell2.X + 1, cell2.Y));
+                        AddCellToList(list, field.GetCell(cell1.X - 1, cell1.Y));
+                        AddCellToList(list, field.GetCell(cell2.X + 1, cell2.Y));
                     }
-                    cell = GetCell(list2, r.Next(list2.Count()));
+                    cell = GetCell(list, r.Next(list.Count()));
                     i = cell.X;
                     j = cell.Y;
                     break;
@@ -83,24 +84,6 @@ namespace SeaFightGame.Algorithm
                     j = cell.Y;
                     break;
             }
-
-
-            //if (crossCells.Count() != null)
-            //{
-
-            //}
-            //else
-            //{
-            //    //ICell cell = field.GetCell(i, j);
-            //    //IShip ship = field.GetShip(i, j);
-
-            //    //if (ship == null && cell.HasShip == true)
-            //    //{
-            //    //    // тут логіка добивання
-            //    //    budemDobivati = true;
-            //    //}
-
-            //}
         }
     }
 }
