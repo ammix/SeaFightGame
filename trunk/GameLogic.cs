@@ -19,6 +19,26 @@ namespace SeaFightGame.Algorithm
             this.field2 = field2;
             this.ai = ai;
             this.playerShipSetup = playerShipSetup;
+            field1.FieldFired += ShowLoser;
+            field2.FieldFired += ShowWinner;
+        }
+
+        private void Initialize()
+        {
+            isRun = false;
+            //playerShipSetup.Start();
+        }
+
+        private void ShowWinner(IField field)
+        {
+            Initialize();
+            System.Windows.Forms.MessageBox.Show("GAME IS OVER! YOU WIN!");
+        }
+
+        private void ShowLoser(IField field)
+        {
+            Initialize();
+            System.Windows.Forms.MessageBox.Show("GAME IS OVER! YOU LOSE!");
         }
 
         public IPlayerShipSetup PlayerShipSetupAlgorithm
@@ -32,7 +52,9 @@ namespace SeaFightGame.Algorithm
             {
                 do
                 {
-                    ai.Shoot(out i, out j);
+                    if (!isRun)
+                        break;
+                    ai.GetShoot(out i, out j);
                 }
                 while (field1.Fire(i, j));
             }
@@ -48,7 +70,5 @@ namespace SeaFightGame.Algorithm
             isRun = flag;
             playerShipSetup.Start();
         }
-
-        //public event Action<bool> Shooted;
     }
 }

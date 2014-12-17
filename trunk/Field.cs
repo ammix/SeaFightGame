@@ -109,6 +109,13 @@ namespace SeaFightGame.Model
 
                     if (ShipFired != null)
                         ShipFired(ship);
+
+                    if (FieldFired != null)
+                    {
+                        IEnumerable<IShip> freeShips = GetShips().Where(s => !s.IsFired);
+                        if (freeShips.Count() == 0)
+                            FieldFired(this);
+                    }
                 }
             }
             return shootResult;
@@ -135,5 +142,6 @@ namespace SeaFightGame.Model
 
         public event Action<ICell> CellFired;
         public event Action<IShip> ShipFired;
+        public event Action<IField> FieldFired;
     }
 }

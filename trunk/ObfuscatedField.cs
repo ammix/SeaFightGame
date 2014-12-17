@@ -71,5 +71,11 @@ namespace SeaFightGame.Model
             add { field.ShipFired += value; }
             remove { field.ShipFired -= value; }
         }
+
+        public event Action<IField> FieldFired
+        {
+            add { field.FieldFired += value; }
+            remove { field.FieldFired -= value; }
+        }
 }
 }

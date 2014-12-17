@@ -21,5 +21,6 @@ namespace SeaFightGame.Model
 
         event Action<ICell> CellFired;
         event Action<IShip> ShipFired;
+        event Action<IField> FieldFired;
     }
 }
