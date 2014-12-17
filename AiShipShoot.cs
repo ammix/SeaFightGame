@@ -19,54 +19,63 @@ namespace SeaFightGame.Algorithm
             this.field = field;
         }
 
+        private static void AddCellToList(List<ICell> list, ICell cell)
+        {
+            if (cell != null && cell.HasShip == null)
+                list.Add(cell);
+        }
+
+        private ICell GetCell(IEnumerable<ICell> collection, int n)
+        {
+            IEnumerator<ICell> iterator = collection.GetEnumerator();
+            for (int i = 0; i <= n; i++)
+                iterator.MoveNext();
+            return iterator.Current;
+        }
+
         public void Shoot(out int i, out int j)
         {
             ICell cell = null;
-            ICell[] neighborsCells = new ICell[4];
             // З'ясовуємо, чи потрібно добивати
             // Отримуємо колекцію усіх комірок, які малються хрестиком
-            IEnumerable<ICell> crossCells = field.GetCells().Where(c=>c.HasShip == true);
+            IEnumerable<ICell> crossCells = field.GetCells().Where(c => c.HasShip == true && field.GetShip(c.X, c.Y) == null);
             switch (crossCells.Count())
             {
                 case 0:
                     // Пошук нового корабля
-                    IEnumerable<ICell> notShootedCells = field.GetCells().Where(c => c.HasShip == null);
-                    //List<ICell> list = new List<ICell>(
-                    //notShootedCells.Find
-
-
-                    var iterator = notShootedCells.GetEnumerator();
-                    int n = notShootedCells.Count();
-                    int next = r.Next(n);
-                    for (int k = 0; k <= next; k++)
-                        iterator.MoveNext();
-                    cell = iterator.Current;
-
-                    //ICell[] array = firedCells.ToArray();
-                    //ICell c = array[next];
-
+                    IEnumerable<ICell> freeCells = field.GetCells().Where(c => c.HasShip == null);
+                    cell = GetCell(freeCells, r.Next(freeCells.Count()));
                     i = cell.X;
                     j = cell.Y;
                     break;
                 case 1:
-                    crossCells.GetEnumerator().MoveNext();
-                    cell = crossCells.GetEnumerator().Current;
+                    cell = GetCell(crossCells, 0);
                     i = cell.X;
                     j = cell.Y;
-                    neighborsCells[0] = field.GetCell(i + 1, j);
-                    neighborsCells[0] = field.GetCell(i, j + 1);
-                    neighborsCells[0] = field.GetCell(i - 1, j);
-                    neighborsCells[0] = field.GetCell(i, j - 1);
-                    int direction = r.Next(4);
+                    List<ICell> list = new List<ICell>();
+                    AddCellToList(list, field.GetCell(i + 1, j));
+                    AddCellToList(list, field.GetCell(i, j + 1));
+                    AddCellToList(list, field.GetCell(i - 1, j));
+                    AddCellToList(list, field.GetCell(i, j - 1));
+                    cell = GetCell(list, r.Next(list.Count()));
+                    i = cell.X;
+                    j = cell.Y;
+
+                    //crossCells.GetEnumerator().MoveNext();
+                    //cell = crossCells.GetEnumerator().Current;
                     //ShipSetupUtils.GetShipTail(x1, y1, deckNumber, r.Next(4), out x2, out y2);
                     break;
                 case 2:
                 case 3:
+                    i = 0;
+                    j = 0;
+                    break;
+                default:
+                    i = 0;
+                    j = 0;
                     break;
             }
 
-            i = 0;
-            j = 0;
 
             //if (crossCells.Count() != null)
             //{
