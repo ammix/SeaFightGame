@@ -41,13 +41,6 @@ namespace SeaFightGame.Algorithm
             IEnumerable<ICell> crossCells = field.GetCells().Where(c => c.HasShip == true && field.GetShip(c.X, c.Y) == null);
             switch (crossCells.Count())
             {
-                case 0:
-                    // Пошук нового корабля
-                    IEnumerable<ICell> freeCells = field.GetCells().Where(c => c.HasShip == null);
-                    cell = GetCell(freeCells, r.Next(freeCells.Count()));
-                    i = cell.X;
-                    j = cell.Y;
-                    break;
                 case 1:
                     cell = GetCell(crossCells, 0);
                     i = cell.X;
@@ -60,19 +53,34 @@ namespace SeaFightGame.Algorithm
                     cell = GetCell(list, r.Next(list.Count()));
                     i = cell.X;
                     j = cell.Y;
-
-                    //crossCells.GetEnumerator().MoveNext();
-                    //cell = crossCells.GetEnumerator().Current;
-                    //ShipSetupUtils.GetShipTail(x1, y1, deckNumber, r.Next(4), out x2, out y2);
                     break;
                 case 2:
                 case 3:
-                    i = 0;
-                    j = 0;
+                    ICell cell1 = GetCell(crossCells, 0);
+                    ICell cell2 = GetCell(crossCells, crossCells.Count() - 1);
+                    //Order(ref cell1, ref cell2);
+                    List<ICell> list2 = new List<ICell>();
+                    if (cell1.X - cell2.X == 0)
+                    {
+                        AddCellToList(list2, field.GetCell(cell1.X, cell1.Y-1));
+                        AddCellToList(list2, field.GetCell(cell2.X, cell2.Y+1));
+                    }
+                    else
+                    {
+                        AddCellToList(list2, field.GetCell(cell1.X - 1, cell1.Y));
+                        AddCellToList(list2, field.GetCell(cell2.X + 1, cell2.Y));
+                    }
+                    cell = GetCell(list2, r.Next(list2.Count()));
+                    i = cell.X;
+                    j = cell.Y;
                     break;
+                case 0:
                 default:
-                    i = 0;
-                    j = 0;
+                    // Пошук нового корабля
+                    IEnumerable<ICell> freeCells = field.GetCells().Where(c => c.HasShip == null);
+                    cell = GetCell(freeCells, r.Next(freeCells.Count()));
+                    i = cell.X;
+                    j = cell.Y;
                     break;
             }
 
