@@ -20,7 +20,10 @@ namespace SeaFightGame.Model
 
         public IShip GetShip(int i, int j)
         {
-            return null;
+            ICell cell = field.GetCell(i, j);
+            IShip ship = field.GetShip(i, j);
+
+            return (cell.HasShip==true && ship.IsFired) ? ship : null;
         }
 
         public void AddShip(IShip ship)
