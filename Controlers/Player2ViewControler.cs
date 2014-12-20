@@ -7,19 +7,16 @@ namespace SeaFightGame.View
 {
     public class Player2ViewControler : ViewControler
     {
-        public Player2ViewControler(IField field, IGameLogic game)
-            : base(field, game) { }
-
         protected override void OnMouseClick(MouseEventArgs e)
         {
             if (IsInControlArea(e.X, e.Y))
             {
-                if (game.IsRun)
+                if (Game.IsRun)
                     if (e.Button == MouseButtons.Left)
                     {
                         int i, j;
                         GetPoint(e.X, e.Y, out i, out j);
-                        game.Fire(i, j);
+                        Game.Fire(i, j);
                     }
             }
         }

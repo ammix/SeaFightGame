@@ -18,8 +18,8 @@ namespace SeaFightGame
         IAiShipSetup aiShipSetup;
         IGameLogic gameLogic;
 
-        private ViewControler field1View;
-        private ViewControler field2View;
+        //private ViewControler field1View;
+        //private ViewControler field2View;
 
         public GameWindow()
         {
@@ -29,22 +29,26 @@ namespace SeaFightGame
             field2 = new Field();
             obfuscatedField1 = new ObfuscatedField(field1);
             obfuscatedField2 = new ObfuscatedField(field2);
-
             aiShipSetup = new AiShipSetup();
+
             IPlayerShipSetup playerShipSetup = new PlayerShipSetup(field1);
             IAiShipShoot shootAlgorithm = new AiShipShoot(obfuscatedField1);
-            gameLogic = new GameLogic(field1, obfuscatedField2, shootAlgorithm, playerShipSetup);
+            gameLogic = new GameLogic(field1, field2, playerShipSetup, new AiShipSetup(), shootAlgorithm);
 
-            field1View = new Player1ViewControler(field1, gameLogic);
-            field2View = new Player2ViewControler(obfuscatedField2, gameLogic);
+            //field1View = new Player1ViewControler(); //(field1, gameLogic);
+            player1ViewControler.Field = field1;
+            player1ViewControler.Game = gameLogic;
+            //field2View = new Player2ViewControler(); //(obfuscatedField2, gameLogic);
+            player2ViewControler.Field = obfuscatedField2;
+            player2ViewControler.Game = gameLogic;
 
-            this.field1View.Location = new System.Drawing.Point(12, 50);
-            this.field1View.Size = new System.Drawing.Size(300, 300);
-            this.Controls.Add(field1View);
+            //this.field1View.Location = new System.Drawing.Point(12, 50);
+            //this.field1View.Size = new System.Drawing.Size(300, 300);
+            //this.Controls.Add(field1View);
 
-            this.field2View.Location = new System.Drawing.Point(348, 50);
-            this.field2View.Size = new System.Drawing.Size(300, 300);
-            this.Controls.Add(field2View);
+            //this.field2View.Location = new System.Drawing.Point(348, 50);
+            //this.field2View.Size = new System.Drawing.Size(300, 300);
+            //this.Controls.Add(field2View);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -59,19 +63,20 @@ namespace SeaFightGame
             NewGameDialog newGameDialog = new NewGameDialog();
             if (newGameDialog.ShowDialog() == DialogResult.OK)
             {
-                field1.Clear();
-                field2.Clear();
-
-                aiShipSetup.Setup(field2);
-                if (newGameDialog.AiShipSetup)
-                    aiShipSetup.Setup(field1);
                 gameLogic.Start(newGameDialog.AiShipSetup);
 
-                field1View.Refresh();
-                field2View.Refresh();
+                player1ViewControler.Refresh();
+                player2ViewControler.Refresh();
+            }
+        }
 
-                // field2View.AutoSetupShips(algorithm);
-                // AutoSetupShips(ICpuShipSetup algorithm)
+        private void показатиКорабліToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //if ((sender as ToolStripMenuItem).Checked)
+            {
+                player2ViewControler.Field = field2;
+                player2ViewControler.Refresh();
+                //(sender as ToolStripMenuItem).Checked = false;
             }
         }
     }

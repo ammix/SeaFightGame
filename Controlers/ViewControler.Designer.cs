@@ -30,12 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // ViewController
+            // ViewControler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.Name = "ViewController";
+            this.BackColor = System.Drawing.Color.White;
+            this.Name = "ViewControler";
             this.Size = new System.Drawing.Size(202, 202);
             this.ResumeLayout(false);
 
