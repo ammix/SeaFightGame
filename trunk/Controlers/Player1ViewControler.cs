@@ -9,28 +9,21 @@ namespace SeaFightGame.View
 {
     public class Player1ViewControler : ViewControler
     {
-        public Player1ViewControler(IField field, IGameLogic game)
-            : base(field, game)
-        {
-            game.PlayerShipSetupAlgorithm.DrawShip += new Action<IShip>(DrawShip);
-            game.PlayerShipSetupAlgorithm.EraseShip += new Action<IShip>(EraseShip);
-        }
-
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (IsInControlArea(e.X, e.Y))
             {
-                if (!game.IsRun)
+                if (!Game.IsRun)
                 {
-                    if (!game.PlayerShipSetupAlgorithm.HasCompleted)
+                    if (!Game.PlayerShipSetupAlgorithm.HasCompleted)
                     {
                         int i, j;
                         GetPoint(e.X, e.Y, out i, out j);
 
-                        game.PlayerShipSetupAlgorithm.AddNewShip(e.Button, i, j);
-                        if (game.PlayerShipSetupAlgorithm.HasCompleted)
+                        Game.PlayerShipSetupAlgorithm.AddNewShip(e.Button, i, j);
+                        if (Game.PlayerShipSetupAlgorithm.HasCompleted)
                         {
-                            game.Start(true);
+                            Game.Start(true);
                         }
                     }
                     //else
@@ -43,13 +36,13 @@ namespace SeaFightGame.View
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (!game.IsRun)
-                if (!game.PlayerShipSetupAlgorithm.HasCompleted)
+            if (!Game.IsRun)
+                if (!Game.PlayerShipSetupAlgorithm.HasCompleted)
                 {
                     int i, j;
                     GetPoint(e.X, e.Y, out i, out j);
 
-                    game.PlayerShipSetupAlgorithm.MoveNewShip(i, j);
+                    Game.PlayerShipSetupAlgorithm.MoveNewShip(i, j);
                 }
         }
     }

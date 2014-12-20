@@ -5,20 +5,22 @@ using SeaFightGame.Model;
 
 namespace SeaFightGame.Algorithm
 {
-    public class GameLogic: IGameLogic
+    public class GameLogic : IGameLogic
     {
         private IField field1;
         private IField field2;
         private IAiShipShoot ai;
+        private IAiShipSetup aiShipSetup;
         private IPlayerShipSetup playerShipSetup;
         private bool isRun = false;
 
-        public GameLogic(IField field1, IField field2, IAiShipShoot ai, IPlayerShipSetup playerShipSetup)
+        public GameLogic(IField field1, IField field2, IPlayerShipSetup playerShipSetup, IAiShipSetup aiShipSetup, IAiShipShoot ai)
         {
             this.field1 = field1;
             this.field2 = field2;
             this.ai = ai;
             this.playerShipSetup = playerShipSetup;
+            this.aiShipSetup = aiShipSetup;
             field1.FieldFired += ShowLoser;
             field2.FieldFired += ShowWinner;
         }
@@ -65,9 +67,16 @@ namespace SeaFightGame.Algorithm
             get { return isRun; }
         }
 
-        public void Start(bool flag)
+        public void Start(bool aiShipSetupFlag)
         {
-            isRun = flag;
+            field1.Clear();
+            field2.Clear();
+
+            if (aiShipSetupFlag)
+                aiShipSetup.Setup(field1);
+            aiShipSetup.Setup(field2);
+
+            isRun = aiShipSetupFlag;
             playerShipSetup.Start();
         }
     }

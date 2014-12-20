@@ -9,42 +9,68 @@ namespace SeaFightGame.View
 {
     public partial class ViewControler : UserControl
     {
-        protected readonly IField field;
-        protected readonly IGameLogic game;
+        protected IField field;
+        private IGameLogic game;
         private const int X = GameConstants.X;
         private const int Y = GameConstants.Y;
         private const int Shift = GameConstants.SHIFT;
 
-        //public IField field { get; set; }
+        public IField Field
+        {
+            get
+            {
+                return field;
+            }
+            set
+            {
+                field = value;
+                BindWithShips();
+            }
+        }
+
+        public IGameLogic Game
+        {
+            get 
+            {
+                return game;
+            }
+            set
+            {
+                game = value;
+                if (game != null)
+                {
+                    game.PlayerShipSetupAlgorithm.DrawShip += new Action<IShip>(DrawShip);
+                    game.PlayerShipSetupAlgorithm.EraseShip += new Action<IShip>(EraseShip);
+                }
+            }
+        }
 
         public ViewControler()
         {
             InitializeComponent();
         }
 
-        public ViewControler(IField field, IGameLogic game): base()
-        {
-            this.field = field;
-            this.game = game;
-
-            BindWithShips();
-        }
-
         private void BindWithShips()
         {
-            field.CellFired += new Action<ICell>(DrawCell);
-            field.ShipFired += new Action<IShip>(DrawShip);
+            if (field != null)
+            {
+                field.CellFired += new Action<ICell>(DrawCell);
+                field.ShipFired += new Action<IShip>(DrawShip);
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             DrawField();
 
-            foreach (ICell cell in field.GetCells())
-                DrawCell(cell, false, false);
+            if (field != null)
+            {
+                foreach (ICell cell in field.GetCells())
+                    DrawCell(cell, false, false);
 
-            foreach (Ship ship in field.GetShips())
-                DrawShip(ship);
+                foreach (Ship ship in field.GetShips())
+                    DrawShip(ship);
+            }
         }
 
         protected void GetPoint(int x, int y, out int i, out int j)

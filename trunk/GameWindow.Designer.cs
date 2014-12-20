@@ -32,6 +32,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.gameMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.показатиКорабліToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.player1ViewControler = new SeaFightGame.View.Player1ViewControler();
+            this.player2ViewControler = new SeaFightGame.View.Player2ViewControler();
             this.gameMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,16 +53,44 @@
             // gameMenu
             // 
             this.gameMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newGameToolStripMenuItem});
+            this.newGameToolStripMenuItem,
+            this.показатиКорабліToolStripMenuItem});
             this.gameMenu.Name = "contextMenuStrip1";
-            this.gameMenu.Size = new System.Drawing.Size(124, 26);
+            this.gameMenu.Size = new System.Drawing.Size(172, 48);
             // 
             // newGameToolStripMenuItem
             // 
             this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.newGameToolStripMenuItem.Text = "Нова гра";
             this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
+            // 
+            // показатиКорабліToolStripMenuItem
+            // 
+            this.показатиКорабліToolStripMenuItem.Name = "показатиКорабліToolStripMenuItem";
+            this.показатиКорабліToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.показатиКорабліToolStripMenuItem.Text = "Показати кораблі";
+            this.показатиКорабліToolStripMenuItem.Click += new System.EventHandler(this.показатиКорабліToolStripMenuItem_Click);
+            // 
+            // player1ViewControler1
+            // 
+            this.player1ViewControler.BackColor = System.Drawing.Color.LightSkyBlue;
+            //this.player1ViewControler.Field = null;
+            //this.player1ViewControler.Game = null;
+            this.player1ViewControler.Location = new System.Drawing.Point(12, 50);
+            this.player1ViewControler.Name = "player1ViewControler1";
+            this.player1ViewControler.Size = new System.Drawing.Size(300, 300);
+            this.player1ViewControler.TabIndex = 3;
+            // 
+            // player2ViewControler1
+            // 
+            this.player2ViewControler.BackColor = System.Drawing.Color.LightSkyBlue;
+            //this.player2ViewControler.Field = null;
+            //this.player2ViewControler.Game = null;
+            this.player2ViewControler.Location = new System.Drawing.Point(348, 50);
+            this.player2ViewControler.Name = "player2ViewControler1";
+            this.player2ViewControler.Size = new System.Drawing.Size(300, 300);
+            this.player2ViewControler.TabIndex = 4;
             // 
             // GameWindow
             // 
@@ -67,6 +98,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSkyBlue;
             this.ClientSize = new System.Drawing.Size(659, 411);
+            this.Controls.Add(this.player2ViewControler);
+            this.Controls.Add(this.player1ViewControler);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -82,6 +115,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ContextMenuStrip gameMenu;
         private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem показатиКорабліToolStripMenuItem;
+        private View.Player1ViewControler player1ViewControler;
+        private View.Player2ViewControler player2ViewControler;
 
     }
 }
