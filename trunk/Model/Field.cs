@@ -7,11 +7,13 @@ namespace SeaFightGame.Model
 {
     public class Field : IField
     {
+        private string playerName;
         protected List<Ship> ships;
         private Cell[,] cells;
 
-        public Field()
+        public Field(string playerName)
         {
+            this.playerName = playerName;
             cells = new Cell[10, 10];
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 10; j++)
@@ -138,6 +140,11 @@ namespace SeaFightGame.Model
             //        cells[i, j].Ship = ship;
             //        ship.BindWithCell(cells[i, j]);
             //    }
+        }
+
+        public string PlayerName
+        {
+            get { return playerName; }
         }
 
         public event Action<ICell> CellFired;

@@ -37,11 +37,11 @@ namespace SeaFightGame.View
             set
             {
                 game = value;
-                if (game != null)
-                {
-                    game.PlayerShipSetupAlgorithm.DrawShip += new Action<IShip>(DrawShip);
-                    game.PlayerShipSetupAlgorithm.EraseShip += new Action<IShip>(EraseShip);
-                }
+                //if (game != null)
+                //{
+                //    game.PlayerShipSetupAlgorithm.DrawShip += new Action<IShip>(DrawShip);
+                //    game.PlayerShipSetupAlgorithm.EraseShip += new Action<IShip>(EraseShip);
+                //}
             }
         }
 

@@ -7,6 +7,8 @@ namespace SeaFightGame.Model
 {
     public interface IField
     {
+        string PlayerName { get; }
+
         void AddShip(IShip ship);
         void UpdateShip(IShip ship, int x1, int y1, int x2, int y2);
 
