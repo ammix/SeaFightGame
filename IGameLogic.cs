@@ -1,4 +1,5 @@
 ﻿using System;
+using SeaFightGame.Model;
 
 namespace SeaFightGame.Algorithm
 {
@@ -8,5 +9,6 @@ namespace SeaFightGame.Algorithm
         bool IsRun { get; }
         void Start(bool flag);
         IPlayerShipSetup PlayerShipSetupAlgorithm { get; }
+        event Action<IField> GameOvered;
     }
 }

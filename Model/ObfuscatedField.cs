@@ -61,6 +61,11 @@ namespace SeaFightGame.Model
             return field.GetCells();
         }
 
+        public string PlayerName
+        {
+            get { return field.PlayerName; }
+        }
+
         public event Action<ICell> CellFired
         {
             add { field.CellFired += value; }
